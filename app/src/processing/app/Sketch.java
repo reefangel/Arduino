@@ -1234,6 +1234,229 @@ public class Sketch {
 
     current.setProgram(editor.getText());
 
+    
+    String d=editor.getText();
+    int numexp=0;
+    int nummenu=0;
+    int dimming=0;
+    String featurefile="";
+
+	try {
+		featurefile = Base.loadFile(new File(Base.getSketchbookLibrariesPath()+"/ReefAngel_Features/ReefAngel_Features.h"));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	featurefile=featurefile.replace("#define WDT\n", "");
+	featurefile=featurefile.replace("#define SIMPLE_MENU\n", "");
+	featurefile=featurefile.replace("#define DisplayLEDPWM\n", "");
+	featurefile=featurefile.replace("#define PWMEXPANSION\n", "");
+	featurefile=featurefile.replace("#define AI_LED\n", "");
+	featurefile=featurefile.replace("#define IOEXPANSION\n", "");
+	featurefile=featurefile.replace("#define RFEXPANSION\n", "");
+	featurefile=featurefile.replace("#define SALINITYEXPANSION\n", "");
+	featurefile=featurefile.replace("#define ORPEXPANSION\n", "");
+	featurefile=featurefile.replace("#define RelayExp\n", "");
+	for (int a=0;a<9;a++)
+		featurefile=featurefile.replace("#define InstalledRelayExpansionModules " + a + "\n", "");
+	featurefile=featurefile.replace("#define CUSTOM_MAIN\n", "");
+	featurefile=featurefile.replace("#define CUSTOM_MENU\n", "");
+	for (int a=0;a<10;a++)
+		featurefile=featurefile.replace("#define CUSTOM_MENU_ENTRIES " + a + "\n", "");
+	featurefile=featurefile.replace("#define CUSTOM_VARIABLES\n", "");
+	featurefile=featurefile.replace("#define ENABLE_EXCEED_FLAGS\n", "");
+	featurefile=featurefile.replace("#define FONT_8x8\n", "");
+	featurefile=featurefile.replace("#define FONT_8x16\n", "");
+	featurefile=featurefile.replace("#define FONT_12x16\n", "");
+	featurefile=featurefile.replace("#define NUMBERS_8x8\n", "");
+	featurefile=featurefile.replace("#define NUMBERS_8x16\n", "");
+	featurefile=featurefile.replace("#define NUMBERS_12x16\n", "");
+	featurefile=featurefile.replace("#define NUMBERS_16x16\n", "");
+	featurefile=featurefile.replace("#define DateTimeSetup\n", "");
+	featurefile=featurefile.replace("#define wifi\n", "");
+	featurefile=featurefile.replace("#define WavemakerSetup\n", "");
+	featurefile=featurefile.replace("#define ATOSetup\n", "");
+	featurefile=featurefile.replace("#define OverheatSetup\n", "");
+	featurefile=featurefile.replace("#define StandardLightSetup\n", "");
+	
+	System.out.println("The following feature was automatically added:");
+	System.out.println("Watchdog Timer");
+	System.out.println("Version Menu\n");
+	featurefile=AddFeature(featurefile,"WDT");	
+	featurefile=AddFeature(featurefile,"VersionMenu");	
+	
+	System.out.println("The following features were detected:");	
+    if (d.indexOf("ReefAngel.PWM.S")!=-1) dimming=1;
+    if (d.indexOf("ReefAngel.PWM.A")!=-1) dimming=1;
+    if (d.indexOf("ReefAngel.PWM.D")!=-1) dimming=1;
+    if (dimming==1)
+    {
+    	System.out.println("Dimming Signal");
+    	featurefile=AddFeature(featurefile,"DisplayLEDPWM");
+    }
+    if (d.indexOf("ReefAngel.PWM.SetChannel")!=-1)
+    {
+    	System.out.println("Dimming Expansion Module");
+    	featurefile=AddFeature(featurefile,"PWMEXPANSION");
+    }
+    if (d.indexOf("ReefAngel.AI.")!=-1)
+    {
+    	System.out.println("AI Expansion Module");
+    	featurefile=AddFeature(featurefile,"AI_LED");
+    }
+    if (d.indexOf("ReefAngel.IO.")!=-1)
+    {
+    	System.out.println("I/O Expansion Module");
+    	featurefile=AddFeature(featurefile,"IOEXPANSION");
+    }
+    if (d.indexOf("ReefAngel.RF.")!=-1)
+    {
+    	System.out.println("RF Expansion Module");
+    	featurefile=AddFeature(featurefile,"RFEXPANSION");
+    }
+    if (d.indexOf("ReefAngel.Params.Salinity")!=-1)
+    {
+    	System.out.println("Salinity Expansion Module");
+    	featurefile=AddFeature(featurefile,"SALINITYEXPANSION");
+    }
+    if (d.indexOf("ReefAngel.Params.ORP")!=-1)
+    {
+    	System.out.println("ORP Expansion Module");
+    	featurefile=AddFeature(featurefile,"ORPEXPANSION");
+    }
+    if (d.indexOf("ReefAngel.Portal")!=-1 || d.indexOf("CheckWifi();")!=-1 || d.indexOf("ReefAngel.Wifi();")!=-1)
+    {
+    	System.out.println("Wifi");
+    	featurefile=AddFeature(featurefile,"wifi");
+    }
+    if (d.indexOf("Box1_")!=-1) numexp=1;
+    if (d.indexOf("Box2_")!=-1) numexp=2;
+    if (d.indexOf("Box3_")!=-1) numexp=3;
+    if (d.indexOf("Box4_")!=-1) numexp=4;
+    if (d.indexOf("Box5_")!=-1) numexp=5;
+    if (d.indexOf("Box6_")!=-1) numexp=6;
+    if (d.indexOf("Box7_")!=-1) numexp=7;
+    if (d.indexOf("Box8_")!=-1) numexp=8;
+    if (numexp!=0) 
+    {
+    	System.out.println("Relay Expansion Module");
+    	System.out.println("Number of Relay Expasions: " + numexp);
+    	featurefile=AddFeature(featurefile,"RelayExp");
+//    	for (int a=0;a<9;a++)
+//    		featurefile.replace("#define InstalledRelayExpansionModules " + a + "\n", "");
+    	featurefile=AddFeature(featurefile,"InstalledRelayExpansionModules " + numexp);
+    }    
+    if (d.indexOf("CUSTOM_MAIN")!=-1)
+    {
+    	System.out.println("Custom Main Screen");
+    	featurefile=AddFeature(featurefile,"CUSTOM_MAIN");
+    }
+    if (d.indexOf("MenuEntry1")!=-1) nummenu=1;
+    if (d.indexOf("MenuEntry2")!=-1) nummenu=2;
+    if (d.indexOf("MenuEntry3")!=-1) nummenu=3;
+    if (d.indexOf("MenuEntry4")!=-1) nummenu=4;
+    if (d.indexOf("MenuEntry5")!=-1) nummenu=5;
+    if (d.indexOf("MenuEntry6")!=-1) nummenu=6;
+    if (d.indexOf("MenuEntry7")!=-1) nummenu=7;
+    if (d.indexOf("MenuEntry8")!=-1) nummenu=8;
+    if (d.indexOf("MenuEntry9")!=-1) nummenu=8;
+    if (nummenu!=0) 
+    {
+    	System.out.println("Custom Menu");
+    	System.out.println("Number of Menu Options: " + nummenu);
+    	featurefile=AddFeature(featurefile,"CUSTOM_MENU");
+//    	for (int a=0;a<10;a++)
+//    		featurefile.replace("#define CUSTOM_MENU_ENTRIES " + a + "\n", "");
+    	featurefile=AddFeature(featurefile,"CUSTOM_MENU_ENTRIES " + nummenu);
+    }    
+    else
+    {
+        if (d.indexOf("ReefAngel.StandardMenu")!=-1)
+        {
+        	System.out.println("Standard Menu");
+        	featurefile=AddFeature(featurefile,"WavemakerSetup");        	
+        	featurefile=AddFeature(featurefile,"ATOSetup");        	
+        	featurefile=AddFeature(featurefile,"OverheatSetup");        	
+        	featurefile=AddFeature(featurefile,"StandardLightSetup");        	
+        }
+        else
+        {
+	        System.out.println("Simple Menu");
+	    	featurefile=AddFeature(featurefile,"SIMPLE_MENU");
+        }
+    }
+    if (d.indexOf("ReefAngel.CustomVar")!=-1)
+    {
+    	System.out.println("Custom Variable");
+    	featurefile=AddFeature(featurefile,"CUSTOM_VARIABLES");
+    }
+    if (d.indexOf("_Exceed_Flag")!=-1)
+    {
+    	System.out.println("Exceed Flagging");
+    	featurefile=AddFeature(featurefile,"ENABLE_EXCEED_FLAGS");
+    }
+    if (d.indexOf("FONT_8x8")!=-1)
+    {
+    	System.out.println("Extra Font - Medium Size (8x8 pixels)");
+    	featurefile=AddFeature(featurefile,"FONT_8x8");
+    }
+    if (d.indexOf("FONT_8x16")!=-1)
+    {
+    	System.out.println("Extra Font - Large Size (8x16 pixels)");
+    	featurefile=AddFeature(featurefile,"FONT_8x16");
+    }
+    if (d.indexOf("FONT_12x16")!=-1)
+    {
+    	System.out.println("Extra Font - Extra Large Size (12x16 pixels)");
+    	featurefile=AddFeature(featurefile,"FONT_12x16");
+    }
+    if (d.indexOf("NUMBERS_8x8")!=-1)
+    {
+    	System.out.println("Extra Font - Numbers Only - Medium Size (8x8 pixels)");
+    	featurefile=AddFeature(featurefile,"NUMBERS_8x8");
+    }
+    if (d.indexOf("NUMBERS_8x16")!=-1)
+    {
+    	System.out.println("Extra Font - Numbers Only - Large Font (8x16 pixels)");
+    	featurefile=AddFeature(featurefile,"NUMBERS_8x16");
+    }
+    if (d.indexOf("NUMBERS_12x16")!=-1)
+    {
+    	System.out.println("Extra Font - Numbers Only - Extra Large Font (12x16 pixels)");
+    	featurefile=AddFeature(featurefile,"NUMBERS_12x16");
+    }
+    if (d.indexOf("NUMBERS_16x16")!=-1)
+    {
+    	System.out.println("Extra Font - Numbers Only - Huge Font (16x16 pixels)");
+    	featurefile=AddFeature(featurefile,"NUMBERS_16x16");
+    }
+    if (d.indexOf("ReefAngel.SetupDateTime")!=-1 || d.indexOf("ReefAngel.AddDateTimeMenu")!=-1)
+    {
+    	System.out.println("Date/Time Setup Menu");
+    	featurefile=AddFeature(featurefile,"DateTimeSetup");
+    }
+    if (d.indexOf("ReefAngel.LCD.DrawLargeText")!=-1)
+    {
+    	System.out.println("Extra Font - Medium Size (8x8 pixels)");
+    	featurefile=AddFeature(featurefile,"FONT_8x8");
+    }
+    if (d.indexOf("ReefAngel.LCD.DrawHugeText")!=-1)
+    {
+    	System.out.println("Extra Font - Extra Large Size (12x16 pixels)");
+    	featurefile=AddFeature(featurefile,"FONT_12x16");
+    }
+    if (d.indexOf("ReefAngel.LCD.DrawHugeNumbers")!=-1)
+    {
+    	System.out.println("Extra Font - Numbers Only - Huge Font (16x16 pixels)");
+    	featurefile=AddFeature(featurefile,"NUMBERS_16x16");
+    }
+	try {
+		Base.saveFile(featurefile, new File(Base.getSketchbookLibrariesPath()+"/ReefAngel_Features/ReefAngel_Features.h"));
+	} catch (IOException e) {
+		e.printStackTrace();
+	}    
+    
     // TODO record history here
     //current.history.record(program, SketchHistory.RUN);
 
@@ -1262,6 +1485,14 @@ public class Sketch {
 //    return build(tempBuildFolder.getAbsolutePath());
   }
 
+  private String AddFeature(String featurefile, String feature)
+  {
+	  if (featurefile.indexOf(feature)==-1)
+	  {
+		  featurefile = featurefile.substring(0, featurefile.indexOf("#define __REEFANGEL_FEATURES_H__")+34) + "#define " + feature + "\n" + featurefile.substring(featurefile.indexOf("#define __REEFANGEL_FEATURES_H__")+34); 
+	  }
+	  return featurefile;
+  }
 
   /**
    * Build all the code for this sketch.
