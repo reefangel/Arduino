@@ -317,6 +317,9 @@ public class Editor extends JFrame implements RunnerListener {
     //setVisible(true);
   }
 
+  public Base getBase() {
+	return base;
+  } 
 
   /**
    * Handles files dragged & dropped from the desktop and into the editor
