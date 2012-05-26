@@ -1928,7 +1928,7 @@ public class Sketch {
 //      return false;
 //    }
     editor.status.progressNotice(_("Uploading..."));
-    String retstatus=upload(appletFolder.getPath(), foundName, usingProgrammer);
+    String retstatus=upload(appletPath, foundName, usingProgrammer);
     editor.status.progressUpdate(100);
     if (retstatus==foundName)
     	return true;
