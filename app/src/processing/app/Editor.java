@@ -2318,6 +2318,7 @@ public class Editor extends JFrame implements RunnerListener {
         if (success) {
           statusNotice("Done uploading.");
         } else {
+          statusError("Error uploading.");
           // error message will already be visible
         }
       } catch (SerialNotFoundException e) {
