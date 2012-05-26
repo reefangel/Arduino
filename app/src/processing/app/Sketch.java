@@ -1426,7 +1426,7 @@ public class Sketch {
 	    	System.out.println("I/O Expansion Module");
 	    	featurefile=AddFeature(featurefile,"IOEXPANSION");
 	    }
-	    if (d.indexOf("ReefAngel.RF.")!=-1)
+	    if (d.indexOf("ReefAngel.RF.")!=-1 || d.indexOf("AddRFExpansion")!=-1)
 	    {
 	    	System.out.println("RF Expansion Module");
 	    	featurefile=AddFeature(featurefile,"RFEXPANSION");
@@ -1441,7 +1441,7 @@ public class Sketch {
 	    	System.out.println("ORP Expansion Module");
 	    	featurefile=AddFeature(featurefile,"ORPEXPANSION");
 	    }
-	    if (d.indexOf("ReefAngel.Portal")!=-1 || d.indexOf("CheckWifi();")!=-1 || d.indexOf("ReefAngel.Wifi();")!=-1)
+	    if (d.indexOf("ReefAngel.Portal")!=-1 || d.indexOf("CheckWifi();")!=-1 || d.indexOf("ReefAngel.AddWifi();")!=-1)
 	    {
 	    	System.out.println("Wifi");
 	    	featurefile=AddFeature(featurefile,"wifi");
@@ -1488,7 +1488,7 @@ public class Sketch {
 	    }    
 	    else
 	    {
-	        if (d.indexOf("ReefAngel.StandardMenu")!=-1)
+	        if (d.indexOf("ReefAngel.AddStandardMenu")!=-1)
 	        {
 	        	System.out.println("Standard Menu");
 	        	featurefile=AddFeature(featurefile,"WavemakerSetup");        	
