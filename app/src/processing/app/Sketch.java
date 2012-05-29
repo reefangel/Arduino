@@ -1476,7 +1476,7 @@ public class Sketch {
 	    if (d.indexOf("MenuEntry6")!=-1) nummenu=6;
 	    if (d.indexOf("MenuEntry7")!=-1) nummenu=7;
 	    if (d.indexOf("MenuEntry8")!=-1) nummenu=8;
-	    if (d.indexOf("MenuEntry9")!=-1) nummenu=8;
+	    if (d.indexOf("MenuEntry9")!=-1) nummenu=9;
 	    if (nummenu!=0) 
 	    {
 	    	System.out.println("Custom Menu");
