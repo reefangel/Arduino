@@ -1463,7 +1463,7 @@ public class Sketch {
 //	    		featurefile.replace("#define InstalledRelayExpansionModules " + a + "\n", "");
 	    	featurefile=AddFeature(featurefile,"InstalledRelayExpansionModules " + numexp);
 	    }    
-	    if (d.indexOf("CUSTOM_MAIN")!=-1)
+	    if (d.indexOf("DrawCustomMain")!=-1)
 	    {
 	    	System.out.println("Custom Main Screen");
 	    	featurefile=AddFeature(featurefile,"CUSTOM_MAIN");

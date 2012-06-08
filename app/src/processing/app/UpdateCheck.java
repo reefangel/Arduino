@@ -72,27 +72,8 @@ public class UpdateCheck implements Runnable {
 
 
 	public void run() {
-		//System.out.println("checking for updates...");
-
-		if (base.activeEditor != null) {
-			panel.add(new JLabel ("Progress:"));
-			progressBar = new JProgressBar(0, 100);
-			progressBar.setValue(0);
-			progressBar.setStringPainted(true);	
-			panel.add(progressBar);
-			Thread t = new Thread(new DownloadFile());
-			t.start();
-			JOptionPane pane = new JOptionPane(panel);
-			pane.setOptions(new Object[] {});
-			dialog = pane.createDialog(base.activeEditor,"Reef Angel Update Tool"); 
-			dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE); 
-			dialog.setVisible(true);
-
-		}	
 		
 		try {
-			String latest = readVer();
-
 			String lastString = Preferences.get("update.last");
 			long now = System.currentTimeMillis();
 			if (lastString != null) {
@@ -105,12 +86,12 @@ public class UpdateCheck implements Runnable {
 			Preferences.set("update.last", String.valueOf(now));
 
 			String prompt =
-					_("A new version of the Reef Angel Libraries is available.\n Your current version is " + readVer() + "\n" +
+					_("A new version of the Reef Angel Libraries is available.\nYour current version is " + readVer() + "\n" +
 							"Newer version is " + MyVer() + "\n\n" +
 							"Would you like to update now?");
 
 			if (base.activeEditor != null) {
-				if (latest != MyVer()) {
+				if (!readVer().equals(MyVer())) {
 					Object[] options = { _("Yes"), _("No") };
 					int result = JOptionPane.showOptionDialog(base.activeEditor,
 							prompt,
@@ -121,7 +102,21 @@ public class UpdateCheck implements Runnable {
 							options,
 							options[0]);
 					if (result == JOptionPane.YES_OPTION) {
-						//						copyURLtoFile("http://www.arduino.cc/en/Main/Software","c:/users/Owner/Desktop/test.txt");
+						if (base.activeEditor != null) {
+							panel.add(new JLabel ("Progress:"));
+							progressBar = new JProgressBar(0, 100);
+							progressBar.setValue(0);
+							progressBar.setStringPainted(true);	
+							panel.add(progressBar);
+							Thread t = new Thread(new DownloadFile());
+							t.start();
+							JOptionPane pane = new JOptionPane(panel);
+							pane.setOptions(new Object[] {"Cancel"});
+							dialog = pane.createDialog(base.activeEditor,"Reef Angel Update Tool"); 
+							dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE); 
+							dialog.setVisible(true);
+
+						}	
 					}
 				}
 			}
@@ -308,7 +303,7 @@ public class UpdateCheck implements Runnable {
 	        AddFile("https://raw.github.com/reefangel/libraries/master/Salinity/Salinity.h",Base.getSketchbookFolder().getPath() + "/libraries/Salinity/Salinity.h");
 	        AddFile("https://raw.github.com/reefangel/libraries/master/Timer/Timer.cpp",Base.getSketchbookFolder().getPath() + "/libraries/Timer/Timer.cpp");
 	        AddFile("https://raw.github.com/reefangel/libraries/master/Timer/Timer.h",Base.getSketchbookFolder().getPath() + "/libraries/Timer/Timer.h");
-	        AddFile("http://www.reefangel.com/update/files/RA_Preloaded/",Base.getSketchbookFolder().getPath() + "/RA_Preloaded/RA_Preloaded.ino");
+	        AddFile("http://www.reefangel.com/update/files/RA_Preloaded/RA_Preloaded.ino",Base.getSketchbookFolder().getPath() + "/RA_Preloaded/RA_Preloaded.ino");
 	        AddFile("http://www.reefangel.com/update/files/tools/RALibsVer/tool/RALibsVer.jar",Base.getSketchbookFolder().getPath() + "/tools/RALibsVer/tool/RALibsVer.jar");
 	        AddFile("http://www.reefangel.com/update/files/tools/RestorePreloaded/tool/RestorePreloaded.jar",Base.getSketchbookFolder().getPath() + "/tools/RestorePreloaded/tool/RestorePreloaded.jar");
 	        AddFile("http://www.reefangel.com/update/files/tools/RestorePreloaded/data/connection.png",Base.getSketchbookFolder().getPath() + "/tools/RestorePreloaded/data/connection.png");
