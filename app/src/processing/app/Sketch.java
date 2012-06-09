@@ -1356,47 +1356,7 @@ public class Sketch {
 		"\n" + 
 		"#endif  // __REEFANGEL_FEATURES_H__";
 	    
-	    
-//		try {
-//			featurefile = Base.loadFile(new File(Base.getSketchbookLibrariesPath()+"/ReefAngel_Features/ReefAngel_Features.h"));
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-	//	
-//		featurefile=featurefile.replace("#define WDT\n", "");
-//		featurefile=featurefile.replace("#define SIMPLE_MENU\n", "");
-//		featurefile=featurefile.replace("#define DisplayLEDPWM\n", "");
-//		featurefile=featurefile.replace("#define PWMEXPANSION\n", "");
-//		featurefile=featurefile.replace("#define AI_LED\n", "");
-//		featurefile=featurefile.replace("#define IOEXPANSION\n", "");
-//		featurefile=featurefile.replace("#define RFEXPANSION\n", "");
-//		featurefile=featurefile.replace("#define SALINITYEXPANSION\n", "");
-//		featurefile=featurefile.replace("#define ORPEXPANSION\n", "");
-//		featurefile=featurefile.replace("#define RelayExp\n", "");
-//		for (int a=0;a<9;a++)
-//			featurefile=featurefile.replace("#define InstalledRelayExpansionModules " + a + "\n", "");
-//		featurefile=featurefile.replace("#define CUSTOM_MAIN\n", "");
-//		featurefile=featurefile.replace("#define CUSTOM_MENU\n", "");
-//		for (int a=0;a<10;a++)
-//			featurefile=featurefile.replace("#define CUSTOM_MENU_ENTRIES " + a + "\n", "");
-//		featurefile=featurefile.replace("#define CUSTOM_VARIABLES\n", "");
-//		featurefile=featurefile.replace("#define ENABLE_EXCEED_FLAGS\n", "");
-//		featurefile=featurefile.replace("#define FONT_8x8\n", "");
-//		featurefile=featurefile.replace("#define FONT_8x16\n", "");
-//		featurefile=featurefile.replace("#define FONT_12x16\n", "");
-//		featurefile=featurefile.replace("#define NUMBERS_8x8\n", "");
-//		featurefile=featurefile.replace("#define NUMBERS_8x16\n", "");
-//		featurefile=featurefile.replace("#define NUMBERS_12x16\n", "");
-//		featurefile=featurefile.replace("#define NUMBERS_16x16\n", "");
-//		featurefile=featurefile.replace("#define DateTimeSetup\n", "");
-//		featurefile=featurefile.replace("#define wifi\n", "");
-//		featurefile=featurefile.replace("#define WavemakerSetup\n", "");
-//		featurefile=featurefile.replace("#define ATOSetup\n", "");
-//		featurefile=featurefile.replace("#define OverheatSetup\n", "");
-//		featurefile=featurefile.replace("#define StandardLightSetup\n", "");
-		
-		System.out.println("The following feature was automatically added:");
+		System.out.println("The following features were automatically added:");
 		System.out.println("Watchdog Timer");
 		System.out.println("Version Menu\n");
 		featurefile=AddFeature(featurefile,"WDT");	
