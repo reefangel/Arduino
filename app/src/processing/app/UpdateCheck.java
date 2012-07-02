@@ -90,8 +90,8 @@ public class UpdateCheck implements Runnable {
 			Preferences.set("update.last", String.valueOf(now));
 
 			String prompt =
-					_("A new version of the Reef Angel Libraries is available.\nYour current version is " + readVer() + "\n" +
-							"Newer version is " + MyVer() + "\n\n" +
+					_("A new version of the Reef Angel Libraries is available.\nYour current version is " + MyVer() + "\n" +
+							"Newer version is " + readVer() + "\n\n" +
 							"Would you like to update now?");
 
 			if (base.activeEditor != null) {
