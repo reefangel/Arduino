@@ -55,7 +55,7 @@ public class EditorStatus extends JPanel /*implements ActionListener*/ {
   Editor editor;
 
   int mode;
-  String message;
+  public String message;
 
   Font font;
   FontMetrics metrics;

@@ -103,7 +103,7 @@ public class Editor extends JFrame implements RunnerListener {
   static SerialMonitor serialMonitor;
   
   EditorHeader header;
-  EditorStatus status;
+  public EditorStatus status;
   EditorConsole console;
 
   JSplitPane splitPane;
@@ -148,7 +148,7 @@ public class Editor extends JFrame implements RunnerListener {
   Runnable stopHandler;
   Runnable exportHandler;
   Runnable exportAppHandler;
-
+  public Runnable RAexportHandler;
 
   public Editor(Base ibase, String path, int[] location) throws Exception {
     super("Arduino");
@@ -319,6 +319,9 @@ public class Editor extends JFrame implements RunnerListener {
     //setVisible(true);
   }
 
+  public Base getBase() {
+	return base;
+  } 
 
   /**
    * Handles files dragged & dropped from the desktop and into the editor
@@ -1452,6 +1455,7 @@ public class Editor extends JFrame implements RunnerListener {
     stopHandler = new DefaultStopHandler();
     exportHandler = new DefaultExportHandler();
     exportAppHandler = new DefaultExportAppHandler();
+    RAexportHandler = new DefaultExportHandler();
   }
 
 
@@ -2406,10 +2410,17 @@ public class Editor extends JFrame implements RunnerListener {
     //if (!handleExportCheckModified()) return;
     toolbar.activate(EditorToolbar.EXPORT);
     console.clear();
-    status.progress(_("Uploading to I/O Board..."));
+    status.progress(_("Uploading to Controller..."));
 
     new Thread(usingProgrammer ? exportAppHandler : exportHandler).start();
   }
+
+  synchronized public void RAhandleExport() {
+	    toolbar.activate(EditorToolbar.EXPORT);
+	    console.clear();
+	    status.progress(_("Uploading to Controller..."));
+	  }
+
 
   // DAM: in Arduino, this is upload
   class DefaultExportHandler implements Runnable {
@@ -2425,6 +2436,7 @@ public class Editor extends JFrame implements RunnerListener {
         if (success) {
           statusNotice(_("Done uploading."));
         } else {
+          statusError("Error uploading.");
           // error message will already be visible
         }
       } catch (SerialNotFoundException e) {
