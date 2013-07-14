@@ -1,3 +1,4 @@
+#ifdef USBCON
 // Copyright (c) 2010, Peter Barrett
 /*
 ** Permission to use, copy, modify, and/or distribute this software for
@@ -864,3 +865,5 @@ bool USBDevice_::configured()
 void USBDevice_::poll()
 {
 }
+
+#endif // USBCON
