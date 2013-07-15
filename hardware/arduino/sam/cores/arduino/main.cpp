@@ -49,7 +49,8 @@ int main( void )
 	{
 		loop();
 		if (serialEventRun) serialEventRun();
-	}
+		WDT_Restart( WDT );
+}
 
 	return 0;
 }

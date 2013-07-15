@@ -366,6 +366,14 @@ void init( void )
 {
   SystemInit();
 
+  // Variable wdp_ms hold the periode in 256 th of seconds of watchdog
+  // It must be greater than 3 et less or equal to 4096
+  // We want 1 second WDT, so we are using 256
+  uint32_t wdp_ms = 256 ;
+  WDT_Enable( WDT, 0x2000 | wdp_ms | ( wdp_ms << 16 ));
+  // Restart watchdog
+  WDT_Restart( WDT );
+  
   // Set Systick to 1ms interval, common to all SAM3 variants
   if (SysTick_Config(SystemCoreClock / 1000))
   {
@@ -374,7 +382,7 @@ void init( void )
   }
 
   // Disable watchdog
-  WDT_Disable(WDT);
+  //  WDT_Disable(WDT);
 
   // Initialize C library
   __libc_init_array();
