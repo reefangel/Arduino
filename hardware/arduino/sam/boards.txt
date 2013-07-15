@@ -1,4 +1,3 @@
-
 arduino_due_x_dbg.name=Arduino Due (Programming Port)
 arduino_due_x_dbg.upload.tool=bossac
 arduino_due_x_dbg.upload.protocol=sam-ba
@@ -39,12 +38,13 @@ RA_Evolution.name=Reef Angel Evolution
 RA_Evolution.upload.tool=bossac
 RA_Evolution.upload.protocol=sam-ba
 RA_Evolution.upload.maximum_size=524288
+RA_Evolution.upload.maximum_data_size=98304
 RA_Evolution.upload.use_1200bps_touch=true
 RA_Evolution.upload.wait_for_upload_port=false
 RA_Evolution.upload.native_usb=false
 RA_Evolution.build.mcu=cortex-m3
 RA_Evolution.build.f_cpu=84000000L
-arduino_due_x.build.board=SAM_REEFANGEL_EVOLUTION
+RA_Evolution.build.board=SAM_REEFANGEL_EVOLUTION
 RA_Evolution.build.core=arduino
 RA_Evolution.build.extra_flags=-D__SAM3X8E__ -mthumb
 RA_Evolution.build.ldscript=linker_scripts/gcc/flash.ld
