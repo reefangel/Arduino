@@ -1730,7 +1730,7 @@ public class Sketch {
    * Handle export to applet.
    */
   public boolean exportApplet(String appletPath, boolean usingProgrammer)
-    throws RunnerException, IOException, SerialException {
+    throws Exception {
 
     prepare();
       
@@ -1811,7 +1811,7 @@ public class Sketch {
   }
 
   protected String upload(String buildPath, String suggestedClassName, boolean usingProgrammer)
-    throws RunnerException, SerialException {
+    throws Exception {
 
     Uploader uploader;
 
