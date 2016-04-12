@@ -29,6 +29,7 @@ import processing.app.Sketch;
 import processing.app.SketchCode;
 import processing.core.*;
 import processing.app.I18n;
+import processing.app.helpers.filefilters.OnlyDirs;
 import static processing.app.I18n._;
 
 import java.io.*;
@@ -38,7 +39,7 @@ import java.util.zip.*;
 
 public class Compiler implements MessageConsumer {
   static final String BUGS_URL =
-    _("http://code.google.com/p/arduino/issues/list");
+    _("http://github.com/arduino/Arduino/issues");
   static final String SUPER_BADNESS =
     I18n.format(_("Compiler error, please submit this code to {0}"), BUGS_URL);
 
@@ -46,6 +47,7 @@ public class Compiler implements MessageConsumer {
   String buildPath;
   String primaryClassName;
   boolean verbose;
+  boolean sketchIsCompiled;
 
   RunnerException exception;
 
@@ -68,6 +70,7 @@ public class Compiler implements MessageConsumer {
     this.buildPath = buildPath;
     this.primaryClassName = primaryClassName;
     this.verbose = verbose;
+    this.sketchIsCompiled = false;
 
     // the pms object isn't used for anything but storage
     MessageStream pms = new MessageStream(this);
@@ -117,8 +120,14 @@ public class Compiler implements MessageConsumer {
    List includePaths = new ArrayList();
    includePaths.add(corePath);
    if (variantPath != null) includePaths.add(variantPath);
-   for (File file : sketch.getImportedLibraries()) {
-     includePaths.add(file.getPath());
+   for (File libFolder : sketch.getImportedLibraries()) {
+     // Forward compatibility with 1.5 library format
+     File propertiesFile = new File(libFolder, "library.properties");
+     File srcFolder = new File(libFolder, "src");
+     if (propertiesFile.isFile() && srcFolder.isDirectory())
+       includePaths.add(srcFolder.getPath());
+     else
+       includePaths.add(libFolder.getPath());
    }
 
    // 1. compile the sketch (already in the buildPath)
@@ -130,14 +139,33 @@ public class Compiler implements MessageConsumer {
                findFilesInPath(buildPath, "c", false),
                findFilesInPath(buildPath, "cpp", false),
                boardPreferences));
+   sketchIsCompiled = true;
 
    // 2. compile the libraries, outputting .o files to: <buildPath>/<library>/
 
    sketch.setCompilingProgress(40);
    for (File libraryFolder : sketch.getImportedLibraries()) {
      File outputFolder = new File(buildPath, libraryFolder.getName());
-     File utilityFolder = new File(libraryFolder, "utility");
      createFolder(outputFolder);
+     
+     // Forward compatibility with 1.5 library format
+     File propertiesFile = new File(libraryFolder, "library.properties");
+     File srcFolder = new File(libraryFolder, "src");
+     if (propertiesFile.exists() && srcFolder.isDirectory()) {
+       // Is an 1.5 library with "src" folder layout
+       includePaths.add(srcFolder.getAbsolutePath());
+
+       // Recursively compile "src" folder
+        objectFiles.addAll(recursiveCompile(avrBasePath, srcFolder,
+            outputFolder, includePaths, boardPreferences));
+       
+       includePaths.remove(includePaths.size() - 1);
+       continue;
+     }
+     
+     // Otherwise fallback to 1.0 library layout...
+     
+     File utilityFolder = new File(libraryFolder, "utility");
      // this library can use includes in its utility/ folder
      includePaths.add(utilityFolder.getAbsolutePath());
      objectFiles.addAll(
@@ -158,19 +186,28 @@ public class Compiler implements MessageConsumer {
      includePaths.remove(includePaths.size() - 1);
    }
 
-   // 3. compile the core, outputting .o files to <buildPath> and then
-   // collecting them into the core.a library file.
+    // 3. compile the core, outputting .o files to <buildPath> and then
+    // collecting them into the core.a library file.
 
-   sketch.setCompilingProgress(50);
-  includePaths.clear();
-  includePaths.add(corePath);  // include path for core only
-  if (variantPath != null) includePaths.add(variantPath);
-  List<File> coreObjectFiles =
-    compileFiles(avrBasePath, buildPath, includePaths,
-              findFilesInPath(corePath, "S", true),
-              findFilesInPath(corePath, "c", true),
-              findFilesInPath(corePath, "cpp", true),
-              boardPreferences);
+    sketch.setCompilingProgress(50);
+    includePaths.clear();
+    includePaths.add(corePath); // include path for core only
+    if (variantPath != null)
+      includePaths.add(variantPath);
+    List<File> coreObjectFiles = compileFiles( //
+        avrBasePath, buildPath, includePaths, //
+        findFilesInPath(corePath, "S", true), //
+        findFilesInPath(corePath, "c", true), //
+        findFilesInPath(corePath, "cpp", true), //
+        boardPreferences);
+
+    if (variantPath != null)
+      objectFiles.addAll(compileFiles( //
+          avrBasePath, buildPath, includePaths, //
+          findFilesInPath(variantPath, "S", true), //
+          findFilesInPath(variantPath, "c", true), //
+          findFilesInPath(variantPath, "cpp", true), //
+          boardPreferences));
 
    String runtimeLibraryName = buildPath + File.separator + "core.a";
    List baseCommandAR = new ArrayList(Arrays.asList(new String[] {
@@ -248,6 +285,26 @@ public class Compiler implements MessageConsumer {
     return true;
   }
 
+  private List<File> recursiveCompile(String avrBasePath, File srcFolder,
+      File outputFolder, List<File> includePaths,
+      Map<String, String> boardPreferences) throws RunnerException {
+    List<File> objectFiles = new ArrayList<File>();
+    objectFiles.addAll(compileFiles(avrBasePath, outputFolder.getAbsolutePath(), includePaths,
+        findFilesInFolder(srcFolder, "S", false),
+        findFilesInFolder(srcFolder, "c", false),
+        findFilesInFolder(srcFolder, "cpp", false),
+        boardPreferences));
+
+    // Recursively compile sub-folders
+    for (File srcSubfolder : srcFolder.listFiles(new OnlyDirs())) {
+      File outputSubfolder = new File(outputFolder, srcSubfolder.getName());
+      createFolder(outputSubfolder);
+      objectFiles.addAll(recursiveCompile(avrBasePath, srcSubfolder,
+          outputSubfolder, includePaths, boardPreferences));
+    }
+
+    return objectFiles;
+  }
 
   private List<File> compileFiles(String avrBasePath,
                                   String buildPath, List<File> includePaths,
@@ -398,10 +455,8 @@ public class Compiler implements MessageConsumer {
     boolean compiling = true;
     while (compiling) {
       try {
-        if (in.thread != null)
-          in.thread.join();
-        if (err.thread != null)
-          err.thread.join();
+        in.join();
+        err.join();
         result = process.waitFor();
         //System.out.println("result is " + result);
         compiling = false;
@@ -488,7 +543,7 @@ public class Compiler implements MessageConsumer {
       if (pieces[3].trim().equals("'Udp' was not declared in this scope")) {
         error = _("The Udp class has been renamed EthernetUdp.");
         msg = _("\nAs of Arduino 1.0, the Udp class in the Ethernet library " +
-              "has been renamed to EthernetClient.\n\n");
+              "has been renamed to EthernetUdp.\n\n");
       }
       
       if (pieces[3].trim().equals("'class TwoWire' has no member named 'send'")) {
@@ -513,14 +568,20 @@ public class Compiler implements MessageConsumer {
         //msg = _("\nThe 'Keyboard' class is only supported on the Arduino Leonardo.\n\n");
       }
       
-      RunnerException e = sketch.placeException(error, pieces[1], PApplet.parseInt(pieces[2]) - 1);
+      RunnerException e = null;
+      if (!sketchIsCompiled) {
+        // Place errors when compiling the sketch, but never while compiling libraries
+        // or the core.  The user's sketch might contain the same filename!
+        e = sketch.placeException(error, pieces[1], PApplet.parseInt(pieces[2]) - 1);
+      }
 
       // replace full file path with the name of the sketch tab (unless we're
       // in verbose mode, in which case don't modify the compiler output)
       if (e != null && !verbose) {
         SketchCode code = sketch.getCode(e.getCodeIndex());
-        String fileName = code.isExtension(sketch.getDefaultExtension()) ? code.getPrettyName() : code.getFileName();
-        s = fileName + ":" + e.getCodeLine() + ": error: " + pieces[3] + msg;        
+        String fileName = (code.isExtension("ino") || code.isExtension("pde")) ? code.getPrettyName() : code.getFileName();
+        int lineNum = e.getCodeLine() + 1;
+        s = fileName + ":" + lineNum + ": error: " + pieces[3] + msg;        
       }
             
       if (exception == null && e != null) {
@@ -529,6 +590,18 @@ public class Compiler implements MessageConsumer {
       }      
     }
     
+		if (s.contains("undefined reference to `SPIClass::begin()'")
+				&& s.contains("libraries/Robot_Control")) {
+			String error = _("Please import the SPI library from the Sketch > Import Library menu.");
+			exception = new RunnerException(error);
+		}
+    
+		if (s.contains("undefined reference to `Wire'")
+				&& s.contains("libraries/Robot_Control")) {
+			String error = _("Please import the Wire library from the Sketch > Import Library menu.");
+			exception = new RunnerException(error);
+		}
+		
     System.err.print(s);
   }
 
@@ -540,7 +613,7 @@ public class Compiler implements MessageConsumer {
       avrBasePath + "avr-gcc",
       "-c", // compile, don't link
       "-g", // include debugging info (so errors include line numbers)
-      "-assembler-with-cpp",
+      "-x","assembler-with-cpp",
       "-mmcu=" + boardPreferences.get("build.mcu"),
       "-DF_CPU=" + boardPreferences.get("build.f_cpu"),      
       "-DARDUINO=" + Base.REVISION,
@@ -637,14 +710,29 @@ public class Compiler implements MessageConsumer {
    * not the header files in its sub-folders, as those should be included from
    * within the header files at the top-level).
    */
-  static public String[] headerListFromIncludePath(String path) {
+  static public String[] headerListFromIncludePath(String path) throws IOException {
     FilenameFilter onlyHFiles = new FilenameFilter() {
       public boolean accept(File dir, String name) {
         return name.endsWith(".h");
       }
     };
-    
-    return (new File(path)).list(onlyHFiles);
+    File libFolder = new File(path);
+
+    // Forward compatibility with 1.5 library format
+    File propertiesFile = new File(libFolder, "library.properties");
+    File srcFolder = new File(libFolder, "src");
+    String[] list;
+    if (propertiesFile.isFile() && srcFolder.isDirectory()) {
+      // Is an 1.5 library with "src" folder
+      list = srcFolder.list(onlyHFiles);
+    } else {
+      // Fallback to 1.0 library layout
+      list = libFolder.list(onlyHFiles);
+    }
+    if (list == null) {
+      throw new IOException();
+    }
+    return list;
   }
   
   static public ArrayList<File> findFilesInPath(String path, String extension,

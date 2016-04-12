@@ -13,5 +13,12 @@ hardware/arduino/bootloaders/caterina_LUFA/Caterina.lss
 hardware/arduino/bootloaders/caterina_LUFA/Caterina.elf
 hardware/arduino/bootloaders/caterina_LUFA/Caterina.eep
 hardware/arduino/bootloaders/caterina_LUFA/.dep/
-.gitignore
 build/windows/work/
+build/linux/work/
+build/linux/dist/*.tar.gz
+build/linux/*.tgz
+test-bin
+*.iml
+build/windows/launch4j-*
+build/windows/launcher/launch4j
+build/windows/WinAVR-*.zip
