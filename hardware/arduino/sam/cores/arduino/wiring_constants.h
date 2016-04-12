@@ -38,6 +38,7 @@ extern "C"{
 #define TWO_PI 6.283185307179586476925286766559
 #define DEG_TO_RAD 0.017453292519943295769236907684886
 #define RAD_TO_DEG 57.295779513082320876798154814105
+#define EULER 2.718281828459045235360287471352
 
 #define SERIAL  0x0
 #define DISPLAY 0x1
@@ -47,9 +48,11 @@ enum BitOrder {
 	MSBFIRST = 1
 };
 
-#define CHANGE 1
-#define FALLING 2
-#define RISING 3
+//      LOW 0
+//      HIGH 1
+#define CHANGE 2
+#define FALLING 3
+#define RISING 4
 
 #define DEFAULT 1
 #define EXTERNAL 0
@@ -89,10 +92,8 @@ typedef unsigned int word;
 
 #define bit(b) (1UL << (b))
 
-// TODO: to be checked
-typedef uint8_t boolean ;
+typedef bool boolean ;
 typedef uint8_t byte ;
-
 
 #ifdef __cplusplus
 } // extern "C"

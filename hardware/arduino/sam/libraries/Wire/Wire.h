@@ -1,6 +1,6 @@
 /*
  * TwoWire.h - TWI/I2C library for Arduino Due
- * Copyright (c) 2011 Cristian Maglie <c.maglie@bug.st>.
+ * Copyright (c) 2011 Cristian Maglie <c.maglie@arduino.cc>
  * All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
@@ -35,6 +35,7 @@ public:
 	void begin();
 	void begin(uint8_t);
 	void begin(int);
+	void setClock(uint32_t);
 	void beginTransmission(uint8_t);
 	void beginTransmission(int);
 	uint8_t endTransmission(void);
@@ -100,6 +101,7 @@ private:
 
 	// TWI clock frequency
 	static const uint32_t TWI_CLOCK = 100000;
+	uint32_t twiClock;
 
 	// Timeouts (
 	static const uint32_t RECV_TIMEOUT = 100000;
