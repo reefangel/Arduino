@@ -1,16 +1,27 @@
-# Tamil translations for Arduino IDE package.
+# English translations for PACKAGE package.
 # Copyright (C) 2012 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the Arduino IDE package.
-# Ram Kumar.Y <vaalgatamilram@gmail.com>, 2012.
-#
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Shankar C <c.shankar7@hotmail.com>, 2015
+# Nadar Solomon Sunder <solomonsunder@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Arduino IDE 1.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-29 10:24-0400\n"
-"PO-Revision-Date: 2015-01-14 17:10+0000\n"
+"PO-Revision-Date: 2016-03-07 18:40+0000\n"
 "Last-Translator: Cristian Maglie <c.maglie@arduino.cc>\n"
-"Language-Team: Tamil (http://www.transifex.com/projects/p/arduino-ide-15/language/ta/)\n"
+"Language-Team: Tamil (http://www.transifex.com/mbanzi/arduino-ide-15/language/ta/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,17 +32,44 @@ msgstr ""
 msgid "  (requires restart of Arduino)"
 msgstr "  (Arduino மறுதுவக்கம் தேவைப்படுகிறது)"
 
-#: debug/Compiler.java:455
-msgid "'Keyboard' only supported on the Arduino Leonardo"
+#: ../../../processing/app/debug/Compiler.java:529
+#, java-format
+msgid " Not used: {0}"
 msgstr ""
 
-#: debug/Compiler.java:450
-msgid "'Mouse' only supported on the Arduino Leonardo"
+#: ../../../processing/app/debug/Compiler.java:525
+#, java-format
+msgid " Used: {0}"
+msgstr ""
+
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:558
+msgid ""
+"'Keyboard' not found. Does your sketch include the line '#include "
+"<Keyboard.h>'?"
+msgstr ""
+
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:553
+msgid ""
+"'Mouse' not found. Does your sketch include the line '#include <Mouse.h>'?"
+msgstr ""
+
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:61
+msgid ""
+"'arch' folder is no longer supported! See http://goo.gl/gfFJzU for more "
+"information"
 msgstr ""
 
 #: Preferences.java:478
 msgid "(edit only when Arduino is not running)"
 msgstr "(Arduino செயல்படாதபோது மாற்றம் மட்டுமே முடியும்)"
+
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:67
+msgid "(legacy)"
+msgstr ""
+
+#: ../../../processing/app/helpers/CommandlineParser.java:149
+msgid "--curdir no longer supported"
+msgstr ""
 
 #: ../../../processing/app/Base.java:468
 msgid ""
@@ -42,13 +80,6 @@ msgstr ""
 #: Sketch.java:746
 msgid ".pde -> .ino"
 msgstr ".pde -> .ino"
-
-#: Base.java:773
-msgid ""
-"<html> <head> <style type=\"text/css\">b { font: 13pt \"Lucida Grande\" }p {"
-" font: 11pt \"Lucida Grande\"; margin-top: 8px }</style> </head><b>Are you "
-"sure you want to Quit?</b><p>Closing the last open sketch will quit Arduino."
-msgstr "<html> <head> <style type=\"text/css\">b { font: 13pt \"Lucida Grande\" }p { font: 11pt \"Lucida Grande\"; margin-top: 8px }</style> </head><b>நீங்கள் நிச்சயமாக வெளியேற விரும்புகிறீர்களா?</b><p>கடைசியாக திறந்த வரைவை மூடினால் Arduino அணைந்துவிடும்."
 
 #: Editor.java:2053
 msgid ""
@@ -79,27 +110,48 @@ msgid ""
 "would you like to visit the Arduino download page?"
 msgstr "Arduinoவின் புதிய பதிப்பு கிடைக்கிறது,\nநீங்கள் Arduino பதிவிறக்க பக்கத்தை காண விரும்புகிறீர்களா?"
 
-#: EditorConsole.java:153
-msgid ""
-"A problem occurred while trying to open the\n"
-"files used to store the console output."
-msgstr "பணியக வெளிப்பாடுகலை சேமிக்க பயன்படும் கோப்புகளை திறக்க \nமுயற்சிக்கும்போது பிரச்சனை ஏற்பட்டுவிட்டது."
+#: ../../../../../app/src/cc/arduino/contributions/BuiltInCoreIsNewerCheck.java:96
+#, java-format
+msgid "A newer {0} package is available"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Base.java:2307
+msgid "A subfolder of your sketchbook is not a valid library"
+msgstr ""
 
 #: Editor.java:1116
 msgid "About Arduino"
 msgstr "Arduino பற்றி"
 
+#: ../../../../../app/src/processing/app/Base.java:1177
+msgid "Add .ZIP Library..."
+msgstr ""
+
 #: Editor.java:650
 msgid "Add File..."
 msgstr "கோப்பை சேர்"
 
-#: Base.java:963
-msgid "Add Library..."
-msgstr "நூலகத்தை சேர்..."
+#: ../../../../../app/src/cc/arduino/view/preferences/AdditionalBoardsManagerURLTextArea.java:73
+msgid "Additional Boards Manager URLs"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:268
+msgid "Additional Boards Manager URLs: "
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Preferences.java:161
+msgid "Afrikaans"
+msgstr ""
 
 #: ../../../processing/app/Preferences.java:96
 msgid "Albanian"
 msgstr ""
+
+#: ../../../../../app/src/cc/arduino/contributions/ui/DropdownAllItem.java:42
+#: ../../../../../app/src/cc/arduino/contributions/packages/ui/DropdownAllCoresItem.java:43
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:187
+msgid "All"
+msgstr "எல்லாம்"
 
 #: tools/FixEncoding.java:77
 msgid ""
@@ -107,6 +159,10 @@ msgid ""
 "Do not attempt to save this sketch as it may overwrite\n"
 "the old version. Use Open to re-open the sketch and try again.\n"
 msgstr "கோப்பு குறியீட்டை சரிசெய்ய முயலும்போது ஒரு பிழை ஏற்பட்டுவிட்டது.\nஇந்திய வரைவை சேமிக்க முயலவேண்டாம். ஏனென்றால், அது பழைய பதிப்பை \nமற்றியமைத்துவிடும். வரைவை மறுபடியும் திறந்து முயற்சித்துப்பார்க்கவும்.\n"
+
+#: ../../../cc/arduino/contributions/libraries/LibraryInstaller.java:99
+msgid "An error occurred while updating libraries index!"
+msgstr ""
 
 #: ../../../processing/app/BaseNoGui.java:528
 msgid "An error occurred while uploading the sketch"
@@ -130,7 +186,7 @@ msgstr "உங்கள் கணினிக்கு இயங்குதள�
 
 #: Preferences.java:85
 msgid "Arabic"
-msgstr ""
+msgstr "அரபி"
 
 #: Preferences.java:86
 msgid "Aragonese"
@@ -153,6 +209,10 @@ msgid ""
 "Archiving the sketch has been canceled because\n"
 "the sketch couldn't save properly."
 msgstr "வரைவை ஆவணப்படுத்துவது ரத்து செய்யப்பட்டது. ஏனென்றால், \nஅந்த வரைவை சரியாக சேமிக்க முடியவில்லை."
+
+#: ../../../../../arduino-core/src/processing/app/I18n.java:24
+msgid "Arduino"
+msgstr ""
 
 #: ../../../processing/app/I18n.java:83
 msgid "Arduino ARM (32-bits) Boards"
@@ -180,13 +240,6 @@ msgid ""
 "create a folder to store your sketchbook."
 msgstr "Arduino இயங்கமுடியவில்லை ஏனென்றால்,\nவரைவுப்புத்தகத்தை சேமிக்க உறையை உருவாக்கமுடியவில்லை."
 
-#: Base.java:240
-msgid ""
-"Arduino requires a full JDK (not just a JRE)\n"
-"to run. Please install JDK 1.5 or later.\n"
-"More information can be found in the reference."
-msgstr "Arduinoவிற்கு முழு JDK தேவை (JRE மட்டும் கூடாது). \nJDK 1.5 (அ) புதியதை நிறுவவும்.\nமேலும் விவரங்களை குறிப்பில் காணலாம்."
-
 #: ../../../processing/app/EditorStatus.java:471
 msgid "Arduino: "
 msgstr ""
@@ -204,14 +257,6 @@ msgstr "நீங்கள் இந்த வரைவை நீக்க வ�
 msgid "Argument required for --board"
 msgstr ""
 
-#: ../../../processing/app/Base.java:370
-msgid "Argument required for --curdir"
-msgstr ""
-
-#: ../../../processing/app/Base.java:385
-msgid "Argument required for --get-pref"
-msgstr ""
-
 #: ../../../processing/app/Base.java:363
 msgid "Argument required for --port"
 msgstr ""
@@ -222,6 +267,12 @@ msgstr ""
 
 #: ../../../processing/app/Base.java:384
 msgid "Argument required for --preferences-file"
+msgstr ""
+
+#: ../../../processing/app/helpers/CommandlineParser.java:76
+#: ../../../processing/app/helpers/CommandlineParser.java:83
+#, java-format
+msgid "Argument required for {0}"
 msgstr ""
 
 #: ../../../processing/app/Preferences.java:137
@@ -240,29 +291,21 @@ msgstr ""
 msgid "Auto Format"
 msgstr "சுய வடிவம்"
 
-#: tools/AutoFormat.java:934
-msgid "Auto Format Canceled: Too many left curly braces."
-msgstr "சுய வடிவம் ரத்து செய்யப்பட்டது: மிக அதிகமான இடது வளைவு குறியீடுகள்."
-
-#: tools/AutoFormat.java:925
-msgid "Auto Format Canceled: Too many left parentheses."
-msgstr "சுய வடிவம் ரத்து செய்யப்பட்டது: மிக அதிகமான இடது குறியீடுகள்."
-
-#: tools/AutoFormat.java:931
-msgid "Auto Format Canceled: Too many right curly braces."
-msgstr "சுய வடிவம் ரத்து செய்யப்பட்டது: மிக அதிகமான வலது வளைவு குறியீடுகள்."
-
-#: tools/AutoFormat.java:922
-msgid "Auto Format Canceled: Too many right parentheses."
-msgstr "சுய வடிவம் ரத்து செய்யப்பட்டது: மிக அதிகமான வலது குறியீடுகள்."
-
 #: tools/AutoFormat.java:944
 msgid "Auto Format finished."
 msgstr "சுய வடிவம் முடிந்தது."
 
-#: Preferences.java:439
-msgid "Automatically associate .ino files with Arduino"
-msgstr "தானாகவே .ino கோப்புகளை Arduinoவுடன் தொடர்பு படுத்தவும்"
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:457
+msgid "Auto-detect proxy settings"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:264
+msgid "Automatic"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:474
+msgid "Automatic proxy configuration URL:"
+msgstr ""
 
 #: SerialMonitor.java:110
 msgid "Autoscroll"
@@ -277,10 +320,6 @@ msgstr "பிழையின் வரிசை: {0}"
 msgid "Bad file selected"
 msgstr "தவறான கோப்பு தேர்வுசெய்யப்பட்டுள்ளது "
 
-#: ../../../processing/app/debug/Compiler.java:89
-msgid "Bad sketch primary file or bad sketch directory structure"
-msgstr ""
-
 #: ../../../processing/app/Preferences.java:149
 msgid "Basque"
 msgstr ""
@@ -294,6 +333,17 @@ msgstr ""
 msgid "Board"
 msgstr "பலகை"
 
+#: ../../../../../app/src/processing/app/Editor.java:2545
+#: ../../../../../app/src/processing/app/Editor.java:2641
+#, java-format
+msgid "Board at {0} is not available"
+msgstr ""
+
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:62
+#, java-format
+msgid "Board {0} (platform {1}, package {2}) is unknown"
+msgstr ""
+
 #: ../../../processing/app/debug/TargetBoard.java:42
 #, java-format
 msgid ""
@@ -303,6 +353,23 @@ msgstr ""
 
 #: ../../../processing/app/EditorStatus.java:472
 msgid "Board: "
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/contributions/packages/ui/ContributionManagerUI.java:89
+msgid "Boards Manager"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Base.java:1320
+msgid "Boards Manager..."
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/contributions/packages/ui/ContributedPlatformTableCell.java:328
+msgid "Boards included in this package:"
+msgstr ""
+
+#: ../../../processing/app/debug/Compiler.java:1273
+#, java-format
+msgid "Bootloader file specified but missing: {0}"
 msgstr ""
 
 #: ../../../processing/app/Preferences.java:140
@@ -317,12 +384,12 @@ msgstr "NL மற்றும் CR"
 msgid "Browse"
 msgstr "உலவு"
 
-#: Sketch.java:1392 Sketch.java:1423
-msgid "Build folder disappeared or could not be written"
-msgstr "கட்டுமான கோப்புறையை காணவில்லை (அ) எழுதப்பட்ட முடியவில்லை"
-
 #: ../../../processing/app/Sketch.java:1530
 msgid "Build options changed, rebuilding all"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Base.java:1210
+msgid "Built-in Examples"
 msgstr ""
 
 #: ../../../processing/app/Preferences.java:80
@@ -340,6 +407,10 @@ msgstr "துவக்கு நிரல் பதிவேற்று"
 #: Editor.java:2504
 msgid "Burning bootloader to I/O Board (this may take a minute)..."
 msgstr "துவக்கு நிரலை உள்ளீடு/வெளியீடு பலகையில் பதிவேற்றப்படுகிறது (இது சில நிமிடங்கள் நடக்கும்)..."
+
+#: ../../../cc/arduino/contributions/DownloadableContributionsDownloader.java:77
+msgid "CRC doesn't match. File is corrupted."
+msgstr ""
 
 #: ../../../processing/app/Base.java:379
 #, java-format
@@ -384,10 +455,6 @@ msgstr "துவக்கும் போது புதுப்பிப�
 msgid "Chinese (China)"
 msgstr ""
 
-#: ../../../processing/app/Preferences.java:142
-msgid "Chinese (Hong Kong)"
-msgstr ""
-
 #: ../../../processing/app/Preferences.java:144
 msgid "Chinese (Taiwan)"
 msgstr ""
@@ -396,12 +463,8 @@ msgstr ""
 msgid "Chinese (Taiwan) (Big5)"
 msgstr ""
 
-#: Preferences.java:88
-msgid "Chinese Simplified"
-msgstr "இலகு நடை சீனம் "
-
-#: Preferences.java:89
-msgid "Chinese Traditional"
+#: ../../../../../app/src/cc/arduino/view/preferences/AdditionalBoardsManagerURLTextArea.java:98
+msgid "Click for a list of unofficial boards support URLs"
 msgstr ""
 
 #: Editor.java:521 Editor.java:2024
@@ -412,13 +475,21 @@ msgstr "மூடு"
 msgid "Comment/Uncomment"
 msgstr "கருத்துரைக/கருத்தை நீக்குக"
 
+#: ../../../../../arduino-core/src/processing/app/I18n.java:30
+msgid "Communication"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:266
+msgid "Compiler warnings: "
+msgstr ""
+
 #: Sketch.java:1608 Editor.java:1890
 msgid "Compiling sketch..."
 msgstr "வரைவை தொகுக்கிறது..."
 
-#: EditorConsole.java:152
-msgid "Console Error"
-msgstr "பணியக பிழை"
+#: ../../../../../arduino-core/src/processing/app/I18n.java:27
+msgid "Contributed"
+msgstr ""
 
 #: Editor.java:1157 Editor.java:2707
 msgid "Copy"
@@ -519,10 +590,6 @@ msgid ""
 "You'll need to reinstall Arduino."
 msgstr "இயல்புநிலை அமைப்புகளை படிக்க முடியவில்லை.\nநீங்கள் Arduinoவை மீண்டும் நிறுவ வேண்டும்."
 
-#: ../../../processing/app/Sketch.java:1525
-msgid "Could not read prevous build preferences file, rebuilding all"
-msgstr ""
-
 #: Base.java:2482
 #, java-format
 msgid "Could not remove old version of {0}"
@@ -549,10 +616,6 @@ msgstr "வரைவை மருபெயரிட முடியவில்�
 #, java-format
 msgid "Could not replace {0}"
 msgstr "{0}வை மாற்ற முடியவில்லை"
-
-#: ../../../processing/app/Sketch.java:1579
-msgid "Could not write build preferences file"
-msgstr ""
 
 #: tools/Archiver.java:74
 msgid "Couldn't archive sketch"
@@ -581,21 +644,37 @@ msgstr ""
 msgid "Cut"
 msgstr "வெட்டுக"
 
-#: ../../../processing/app/Preferences.java:83
-msgid "Czech"
+#: ../../../../../app/src/processing/app/Preferences.java:119
+msgid "Czech (Czech Republic)"
 msgstr ""
 
-#: Preferences.java:90
-msgid "Danish"
-msgstr "டானியம்"
+#: ../../../../../app/src/processing/app/Preferences.java:120
+msgid "Danish (Denmark)"
+msgstr ""
+
+#: ../../../../../arduino-core/src/processing/app/I18n.java:36
+msgid "Data Processing"
+msgstr ""
+
+#: ../../../../../arduino-core/src/processing/app/I18n.java:35
+msgid "Data Storage"
+msgstr ""
 
 #: Editor.java:1224 Editor.java:2765
 msgid "Decrease Indent"
 msgstr "உள்தள்ளலை குறைக்க"
 
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:185
+msgid "Default"
+msgstr ""
+
 #: EditorHeader.java:314 Sketch.java:591
 msgid "Delete"
 msgstr "நீக்கு"
+
+#: ../../../../../arduino-core/src/processing/app/I18n.java:33
+msgid "Device Control"
+msgstr ""
 
 #: debug/Uploader.java:199
 msgid ""
@@ -607,8 +686,19 @@ msgstr "சாதனம் பதிலளிக்கவில்லை, சர
 msgid "Discard all changes and reload sketch?"
 msgstr "அணைத்து மாற்றங்களையும் ஒதிக்கிவிட்டு வரைவை ஏற்றவா?"
 
+#: ../../../../../arduino-core/src/processing/app/I18n.java:29
+msgid "Display"
+msgstr ""
+
 #: ../../../processing/app/Preferences.java:438
 msgid "Display line numbers"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/contributions/packages/ui/ContributionManagerUI.java:195
+#, java-format
+msgid ""
+"Do you want to remove {0}?\n"
+"If you do so you won't be able to use {0} any more."
 msgstr ""
 
 #: Editor.java:2064
@@ -638,18 +728,49 @@ msgstr "அச்சிட்டுவிட்டது."
 
 #: ../../../processing/app/BaseNoGui.java:514
 msgid "Done uploading"
-msgstr ""
+msgstr "பதிவேறிவிட்டது"
 
 #: Editor.java:2395 Editor.java:2431
 msgid "Done uploading."
 msgstr "மேலேற்றி முடித்துவிட்டது."
 
+#: ../../../cc/arduino/contributions/DownloadableContributionsDownloader.java:105
+#, java-format
+msgid "Downloaded {0}kb of {1}kb."
+msgstr "பதிவிறங்கியது {0} கி.பை. {1} கி.பை. ல்"
+
+#: ../../../cc/arduino/contributions/packages/ContributionInstaller.java:107
+msgid "Downloading boards definitions."
+msgstr ""
+
+#: ../../../cc/arduino/contributions/libraries/LibraryInstaller.java:86
+msgid "Downloading libraries index..."
+msgstr ""
+
+#: ../../../cc/arduino/contributions/libraries/LibraryInstaller.java:115
+#, java-format
+msgid "Downloading library: {0}"
+msgstr ""
+
+#: ../../../cc/arduino/contributions/packages/ContributionInstaller.java:318
+msgid "Downloading platforms index..."
+msgstr ""
+
+#: ../../../cc/arduino/contributions/packages/ContributionInstaller.java:113
+#, java-format
+msgid "Downloading tools ({0}/{1})."
+msgstr ""
+
 #: Preferences.java:91
 msgid "Dutch"
-msgstr "உலாந்தியம்"
+msgstr "டச்சு"
 
 #: ../../../processing/app/Preferences.java:144
 msgid "Dutch (Netherlands)"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Editor.java:1309
+msgid "Edison Help"
 msgstr ""
 
 #: Editor.java:1130
@@ -664,12 +785,25 @@ msgstr "திருத்தி எழுத்துரு அளவு: "
 msgid "Editor language: "
 msgstr ""
 
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:322
+msgid "Enable Code Folding"
+msgstr ""
+
 #: Preferences.java:92
 msgid "English"
 msgstr "ஆங்கிலம்"
 
 #: ../../../processing/app/Preferences.java:145
 msgid "English (United Kingdom)"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:269
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:271
+msgid "Enter a comma separated list of urls"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/view/preferences/AdditionalBoardsManagerURLTextArea.java:96
+msgid "Enter additional URLs, one for each row"
 msgstr ""
 
 #: Editor.java:1062
@@ -686,9 +820,19 @@ msgstr "பிழை"
 msgid "Error adding file"
 msgstr "கோப்பை சேர்ப்பதில் பிழை"
 
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:272
+#, java-format
+msgid "Error compiling for board {0}."
+msgstr ""
+
 #: debug/Compiler.java:369
 msgid "Error compiling."
 msgstr "தொகுப்பதில் பிழை."
+
+#: ../../../cc/arduino/contributions/DownloadableContributionsDownloader.java:113
+#, java-format
+msgid "Error downloading {0}"
+msgstr ""
 
 #: Base.java:1674
 msgid "Error getting the Arduino data folder."
@@ -698,10 +842,6 @@ msgstr "Arduino தரவு கோப்புறையை பெறுவ�
 #, java-format
 msgid "Error inside Serial.{0}()"
 msgstr "தொடர்நிலை.{0}()க்குள் பிழை உள்ளது"
-
-#: ../../../processing/app/Base.java:1232
-msgid "Error loading libraries"
-msgstr ""
 
 #: ../../../processing/app/debug/TargetPlatform.java:95
 #: ../../../processing/app/debug/TargetPlatform.java:106
@@ -715,6 +855,13 @@ msgstr ""
 msgid "Error opening serial port ''{0}''."
 msgstr "தொடர்நிலை துறை ''{0}''யை திறப்பதில் பிழை ஏற்பட்டுவிட்டது."
 
+#: ../../../processing/app/Serial.java:119
+#, java-format
+msgid ""
+"Error opening serial port ''{0}''. Try consulting the documentation at "
+"http://playground.arduino.cc/Linux/All#Permission"
+msgstr ""
+
 #: Preferences.java:277
 msgid "Error reading preferences"
 msgstr "விருப்பங்களை படிப்பதில் பிழை"
@@ -725,6 +872,12 @@ msgid ""
 "Error reading the preferences file. Please delete (or move)\n"
 "{0} and restart Arduino."
 msgstr "விருப்பக் கோப்பை படிப்பதில் பிழை. தயவு செய்து {0}வை அகற்றவும்((அ) நகற்றவும்)\nபின்பு Arduinoவை மறுதொடக்கம் செய்யவும்."
+
+#: ../../../cc/arduino/contributions/packages/ContributionInstaller.java:146
+#: ../../../cc/arduino/contributions/packages/ContributionInstaller.java:166
+#: ../../../cc/arduino/contributions/packages/ContributionInstaller.java:245
+msgid "Error running post install script"
+msgstr ""
 
 #: ../../../cc/arduino/packages/DiscoveryManager.java:25
 msgid "Error starting discovery method: "
@@ -755,6 +908,11 @@ msgstr "குறியீடு {0}ஐ மேலேற்றும்போத�
 #: Editor.java:2567
 msgid "Error while printing."
 msgstr "அச்சிடும்போது பிழை ஏற்பட்டுவிட்டது."
+
+#: ../../../../../arduino-core/src/processing/app/Serial.java:117
+#, java-format
+msgid "Error while setting serial port parameters: {0} {1} {2} {3}"
+msgstr ""
 
 #: ../../../processing/app/BaseNoGui.java:528
 msgid "Error while uploading"
@@ -787,13 +945,21 @@ msgstr ""
 msgid "Examples"
 msgstr "எடுத்துக்காட்டுகள்"
 
-#: Editor.java:2482
-msgid "Export canceled, changes must first be saved."
-msgstr "ஏற்றுமதி ரத்து செய்யப்பட்டது, மாற்றங்களை முதலில் சேமிக்க வேண்டும்."
+#: ../../../../../app/src/processing/app/Base.java:1244
+msgid "Examples from Custom Libraries"
+msgstr ""
 
-#: Base.java:2100
-msgid "FAQ.html"
-msgstr "FAQ.html"
+#: ../../../../../app/src/processing/app/Base.java:1222
+msgid "Examples from Libraries"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Editor.java:753
+msgid "Export canceled, changes must first be saved."
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Editor.java:750
+msgid "Export compiled Binary"
+msgstr ""
 
 #: ../../../processing/app/Base.java:416
 #, java-format
@@ -804,9 +970,18 @@ msgstr ""
 msgid "File"
 msgstr "கோப்பு"
 
+#: ../../../../../arduino-core/src/processing/app/SketchData.java:139
+#, java-format
+msgid "File name {0} is invalid: ignored"
+msgstr ""
+
 #: Preferences.java:94
 msgid "Filipino"
 msgstr "ஃபிலிபினோ"
+
+#: ../../../../../app/src/cc/arduino/contributions/ui/InstallerJDialog.java:95
+msgid "Filter your search..."
+msgstr ""
 
 #: FindReplace.java:124 FindReplace.java:127
 msgid "Find"
@@ -841,10 +1016,10 @@ msgstr ""
 msgid "Fix Encoding & Reload"
 msgstr "குறியீட்டை சரி செய்துவிட்டு ஏற்றவும்"
 
-#: Base.java:1851
+#: ../../../processing/app/BaseNoGui.java:318
 msgid ""
 "For information on installing libraries, see: "
-"http://arduino.cc/en/Guide/Libraries\n"
+"http://www.arduino.cc/en/Guide/Libraries\n"
 msgstr ""
 
 #: ../../../cc/arduino/packages/uploaders/SerialUploader.java:118
@@ -863,6 +1038,14 @@ msgstr "அடிக்கடி கேட்கப்படும் கேள�
 #: Preferences.java:96
 msgid "Galician"
 msgstr "காலிசியன்"
+
+#: ../../../../../app/src/processing/app/Preferences.java:176
+msgid "Galician (Spain)"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Editor.java:1288
+msgid "Galileo Help"
+msgstr ""
 
 #: ../../../processing/app/Preferences.java:94
 msgid "Georgian"
@@ -888,25 +1071,17 @@ msgstr ""
 msgid "Global variables use {0} bytes of dynamic memory."
 msgstr ""
 
+#: ../../../../../app/src/cc/arduino/view/GoToLineNumber.java:66
+msgid "Go to line"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Editor.java:1460
+msgid "Go to line..."
+msgstr ""
+
 #: Preferences.java:98
 msgid "Greek"
 msgstr "கிரேக்கம்"
-
-#: Base.java:2085
-msgid "Guide_Environment.html"
-msgstr "Guide_Environment.html"
-
-#: Base.java:2071
-msgid "Guide_MacOSX.html"
-msgstr "Guide_MacOSX.html"
-
-#: Base.java:2095
-msgid "Guide_Troubleshooting.html"
-msgstr "Guide_Troubleshooting.html"
-
-#: Base.java:2073
-msgid "Guide_Windows.html"
-msgstr "Guide_Windows.html"
 
 #: ../../../processing/app/Preferences.java:95
 msgid "Hebrew"
@@ -918,6 +1093,10 @@ msgstr "உதவி"
 
 #: Preferences.java:99
 msgid "Hindi"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:489
+msgid "Host name:"
 msgstr ""
 
 #: Sketch.java:295
@@ -946,10 +1125,6 @@ msgstr "தவறான நூலகப்பெயரை அலட்சிய�
 msgid "Ignoring sketch with bad name"
 msgstr "தவறான பெயர் கொண்ட வரைவை அளச்சியப்படுத்துகிறது"
 
-#: Editor.java:636
-msgid "Import Library..."
-msgstr "நூலகத்தை இறக்குமதி செய்..."
-
 #: ../../../processing/app/Sketch.java:736
 msgid ""
 "In Arduino 1.0, the default file extension has changed\n"
@@ -961,6 +1136,15 @@ msgid ""
 "Save sketch and update its extension?"
 msgstr ""
 
+#: ../../../../../app/src/processing/app/Editor.java:778
+msgid "Include Library"
+msgstr ""
+
+#: ../../../processing/app/BaseNoGui.java:768
+#: ../../../processing/app/BaseNoGui.java:771
+msgid "Incorrect IDE installation folder"
+msgstr ""
+
 #: Editor.java:1216 Editor.java:2757
 msgid "Increase Indent"
 msgstr "உள்தள்ளலை அதிகப்படுத்துக"
@@ -969,9 +1153,58 @@ msgstr "உள்தள்ளலை அதிகப்படுத்துக"
 msgid "Indonesian"
 msgstr ""
 
+#: ../../../../../app/src/processing/app/Base.java:295
+msgid "Initializing packages..."
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/contributions/libraries/ui/ContributedLibraryTableCell.java:75
+#: ../../../../../app/src/cc/arduino/contributions/libraries/ui/ContributedLibraryTableCell.java:81
+#: ../../../../../app/src/cc/arduino/contributions/libraries/ui/ContributedLibraryTableCell.java:289
+#: ../../../../../app/src/cc/arduino/contributions/packages/ui/ContributedPlatformTableCell.java:78
+#: ../../../../../app/src/cc/arduino/contributions/packages/ui/ContributedPlatformTableCell.java:91
+#: ../../../../../app/src/cc/arduino/contributions/packages/ui/ContributedPlatformTableCell.java:303
+msgid "Install"
+msgstr ""
+
+#: ../../../cc/arduino/contributions/packages/ContributionInstaller.java:170
+msgid "Installation completed!"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/contributions/libraries/ui/DropdownInstalledLibraryItem.java:50
+msgid "Installed"
+msgstr ""
+
+#: ../../../cc/arduino/contributions/packages/ContributionInstaller.java:154
+msgid "Installing boards..."
+msgstr ""
+
+#: ../../../cc/arduino/contributions/libraries/LibraryInstaller.java:126
+#, java-format
+msgid "Installing library: {0}"
+msgstr ""
+
+#: ../../../cc/arduino/contributions/packages/ContributionInstaller.java:134
+#, java-format
+msgid "Installing tools ({0}/{1})..."
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/contributions/libraries/ui/LibraryManagerUI.java:239
+#: ../../../../../app/src/cc/arduino/contributions/packages/ui/ContributionManagerUI.java:172
+msgid "Installing..."
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:256
+msgid "Interface scale:"
+msgstr ""
+
 #: ../../../processing/app/Base.java:1204
 #, java-format
 msgid "Invalid library found in {0}: {1}"
+msgstr ""
+
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:66
+#, java-format
+msgid "Invalid quoting: no closing [{0}] char found."
 msgstr ""
 
 #: Preferences.java:102
@@ -990,16 +1223,50 @@ msgstr ""
 msgid "Latvian"
 msgstr "லேட்வியன்"
 
-#: Base.java:2699
-msgid "Library added to your libraries. Check \"Import library\" menu"
+#: ../../../../../app/src/cc/arduino/contributions/libraries/ui/LibraryManagerUI.java:93
+msgid "Library Manager"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Base.java:2349
+msgid "Library added to your libraries. Check \"Include library\" menu"
+msgstr ""
+
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:73
+msgid "Library can't use both 'src' and 'utility' folders. Double check {0}"
+msgstr ""
+
+#: ../../../cc/arduino/contributions/libraries/LibraryInstaller.java:107
+#, java-format
+msgid "Library is already installed: {0} version {1}"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/view/GoToLineNumber.java:70
+msgid "Line number:"
 msgstr ""
 
 #: Preferences.java:106
 msgid "Lithuaninan"
 msgstr ""
 
+#: ../../../../../app/src/processing/app/Base.java:132
+msgid "Loading configuration..."
+msgstr ""
+
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:73
+#, java-format
+msgid "Looking for recipes like {0}*{1}"
+msgstr ""
+
 #: ../../../processing/app/Sketch.java:1684
 msgid "Low memory available, stability problems may occur."
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Base.java:1168
+msgid "Manage Libraries..."
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:466
+msgid "Manual proxy configuration"
 msgstr ""
 
 #: Preferences.java:107
@@ -1010,12 +1277,17 @@ msgstr ""
 msgid "Message"
 msgstr "தகவல்"
 
-#: ../../../processing/app/preproc/PdePreprocessor.java:412
-msgid "Missing the */ from the end of a /* comment */"
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:81
+#, java-format
+msgid "Missing '{0}' from library in {1}"
 msgstr ""
 
 #: ../../../processing/app/BaseNoGui.java:455
 msgid "Mode not supported"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:186
+msgid "More"
 msgstr ""
 
 #: Preferences.java:449
@@ -1030,12 +1302,13 @@ msgstr "நகற்றுகிறது"
 msgid "Multiple files not supported"
 msgstr ""
 
-#: ../../../processing/app/Base.java:395
-msgid "Must specify exactly one sketch file"
+#: ../../../processing/app/debug/Compiler.java:520
+#, java-format
+msgid "Multiple libraries were found for \"{0}\""
 msgstr ""
 
-#: ../../../processing/app/Preferences.java:158
-msgid "N'Ko"
+#: ../../../processing/app/Base.java:395
+msgid "Must specify exactly one sketch file"
 msgstr ""
 
 #: Sketch.java:282
@@ -1046,6 +1319,14 @@ msgstr "புதிய கோப்பின் பெயர்:"
 msgid "Nepali"
 msgstr ""
 
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:601
+msgid "Network"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Editor.java:65
+msgid "Network ports"
+msgstr ""
+
 #: ../../../cc/arduino/packages/uploaders/SSHUploader.java:51
 msgid "Network upload using programmer not supported"
 msgstr ""
@@ -1053,10 +1334,6 @@ msgstr ""
 #: EditorToolbar.java:41 Editor.java:493
 msgid "New"
 msgstr "புதிய"
-
-#: EditorToolbar.java:46
-msgid "New Editor Window"
-msgstr "புதிய திருத்தி சாளரம்"
 
 #: EditorHeader.java:292
 msgid "New Tab"
@@ -1074,13 +1351,9 @@ msgstr "அடுத்த தாவல்"
 msgid "No"
 msgstr "இல்லை"
 
-#: ../../../processing/app/debug/Compiler.java:146
-msgid "No athorization data found"
+#: ../../../processing/app/debug/Compiler.java:158
+msgid "No authorization data found"
 msgstr ""
-
-#: debug/Compiler.java:126
-msgid "No board selected; please choose a board from the Tools > Board menu."
-msgstr "பலகை தேர்வு செய்யப்படவில்லை; ஒரு பலகையை கருவிகள் > பலகை பட்டியலில் தேர்வு செய்யவும்."
 
 #: tools/format/src/AutoFormat.java:54 tools/AutoFormat.java:916
 msgid "No changes necessary for Auto Format."
@@ -1088,6 +1361,10 @@ msgstr "சுய வடிவத்திற்கு எந்த மாற்
 
 #: ../../../processing/app/BaseNoGui.java:665
 msgid "No command line parameters found"
+msgstr ""
+
+#: ../../../processing/app/debug/Compiler.java:200
+msgid "No compiled sketch found"
 msgstr ""
 
 #: Editor.java:373
@@ -1104,6 +1381,10 @@ msgstr "வரி முடிவு இல்லை"
 
 #: ../../../processing/app/BaseNoGui.java:665
 msgid "No parameters"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:453
+msgid "No proxy"
 msgstr ""
 
 #: Base.java:541
@@ -1128,22 +1409,14 @@ msgstr ""
 msgid "No valid code files found"
 msgstr ""
 
-#: ../../../processing/app/Base.java:309
-msgid "No valid configured cores found! Exiting..."
-msgstr ""
-
 #: ../../../processing/app/debug/TargetPackage.java:63
 #, java-format
 msgid "No valid hardware definitions found in folder {0}."
 msgstr ""
 
-#: Base.java:191
-msgid "Non-fatal error while setting the Look & Feel."
-msgstr "தோற்றம் & உருவத்தை அமைக்கும்போது அபாயமில்லாத பிழை ஏற்பட்டுவிட்டது."
-
-#: Sketch.java:396 Sketch.java:410 Sketch.java:419 Sketch.java:859
-msgid "Nope"
-msgstr "இல்லை"
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:184
+msgid "None"
+msgstr ""
 
 #: ../../../processing/app/Preferences.java:108
 msgid "Norwegian Bokmål"
@@ -1172,6 +1445,10 @@ msgstr ""
 msgid "Open"
 msgstr "திற"
 
+#: ../../../../../app/src/processing/app/Editor.java:625
+msgid "Open Recent"
+msgstr ""
+
 #: Editor.java:2688
 msgid "Open URL"
 msgstr "URLஐ திற"
@@ -1180,17 +1457,21 @@ msgstr "URLஐ திற"
 msgid "Open an Arduino sketch..."
 msgstr "ஒரு Arduino வரைவை திறக்கவும்..."
 
-#: EditorToolbar.java:46
-msgid "Open in Another Window"
-msgstr "மற்றொரு சாளரத்தில் திற"
-
 #: Base.java:903 Editor.java:501
 msgid "Open..."
 msgstr "திற..."
 
+#: ../../../../../arduino-core/src/processing/app/I18n.java:37
+msgid "Other"
+msgstr ""
+
 #: Editor.java:563
 msgid "Page Setup"
 msgstr "பக்கத்தை நிறுவுக"
+
+#: ../../../../../arduino-core/src/processing/app/I18n.java:25
+msgid "Partner"
+msgstr ""
 
 #: ../../../processing/app/forms/PasswordAuthorizationDialog.java:44
 msgid "Password:"
@@ -1208,6 +1489,19 @@ msgstr "பர்ஸியன்"
 msgid "Persian (Iran)"
 msgstr ""
 
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:79
+#, java-format
+msgid "Platform {0} (package {1}) is unknown"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/contributions/packages/ui/ContributionManagerUI.java:195
+msgid "Please confirm boards deletion"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/contributions/libraries/ui/LibraryManagerUI.java:257
+msgid "Please confirm library deletion"
+msgstr ""
+
 #: debug/Compiler.java:408
 msgid "Please import the SPI library from the Sketch > Import Library menu."
 msgstr "SPI நூலகத்தை வரைவு > நூலக இறக்குமதி பட்டியலில் இருந்து இறக்குமதி செய்யவும்."
@@ -1216,13 +1510,13 @@ msgstr "SPI நூலகத்தை வரைவு > நூலக இறக்
 msgid "Please import the Wire library from the Sketch > Import Library menu."
 msgstr ""
 
-#: Base.java:239
-msgid "Please install JDK 1.5 or later"
-msgstr "தயவுசெய்து JDK 1.5 (அ) புதியதை நிறுவவும்"
-
 #: ../../../cc/arduino/packages/uploaders/SerialUploader.java:217
 #: ../../../cc/arduino/packages/uploaders/SerialUploader.java:262
 msgid "Please select a programmer from Tools->Programmer menu"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Editor.java:2613
+msgid "Plotter not available while serial monitor is open"
 msgstr ""
 
 #: Preferences.java:110
@@ -1231,6 +1525,10 @@ msgstr ""
 
 #: ../../../processing/app/Editor.java:718
 msgid "Port"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:491
+msgid "Port number:"
 msgstr ""
 
 #: ../../../processing/app/Preferences.java:151
@@ -1248,6 +1546,10 @@ msgstr ""
 #: Preferences.java:295 Editor.java:583
 msgid "Preferences"
 msgstr "விருப்பத்தேர்வுகள்"
+
+#: ../../../../../app/src/processing/app/Base.java:297
+msgid "Preparing boards..."
+msgstr ""
 
 #: FindReplace.java:123 FindReplace.java:128
 msgid "Previous"
@@ -1285,18 +1587,14 @@ msgstr "இயங்குதளம் அமைப்பதில் பிர�
 msgid "Problem accessing board folder /www/sd"
 msgstr ""
 
-#: ../../../cc/arduino/packages/uploaders/SSHUploader.java:132
-msgid "Problem accessing files in folder "
+#: ../../../../../arduino-core/src/cc/arduino/packages/uploaders/SSHUploader.java:206
+#, java-format
+msgid "Problem accessing files in folder \"{0}\""
 msgstr ""
 
 #: Base.java:1673
 msgid "Problem getting data folder"
 msgstr "தரவு கோப்புறையை பெறுவதில் பிரச்சினை"
-
-#: Sketch.java:1467
-#, java-format
-msgid "Problem moving {0} to the build folder"
-msgstr "{0}ஐ கட்டுமான உறைக்குள் நகற்றுவதில் பிரச்சினை"
 
 #: debug/Uploader.java:209
 msgid ""
@@ -1316,9 +1614,22 @@ msgstr ""
 msgid "Programmer"
 msgstr "நிரலர்"
 
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:80
+#, java-format
+msgid "Progress {0}"
+msgstr ""
+
 #: Base.java:783 Editor.java:593
 msgid "Quit"
 msgstr "வெளியேறுக"
+
+#: ../../../../../app/src/processing/app/Base.java:1233
+msgid "RETIRED"
+msgstr ""
+
+#: ../../../../../arduino-core/src/processing/app/I18n.java:26
+msgid "Recommended"
+msgstr ""
 
 #: Editor.java:1138 Editor.java:1140 Editor.java:1390
 msgid "Redo"
@@ -1327,6 +1638,20 @@ msgstr "திரும்பச்செய்க"
 #: Editor.java:1078
 msgid "Reference"
 msgstr "குறிப்பு"
+
+#: ../../../../../app/src/cc/arduino/contributions/packages/ui/ContributedPlatformTableCell.java:85
+msgid "Remove"
+msgstr ""
+
+#: ../../../cc/arduino/contributions/libraries/LibraryInstaller.java:157
+#, java-format
+msgid "Removing library: {0}"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/contributions/libraries/ui/LibraryManagerUI.java:266
+#: ../../../../../app/src/cc/arduino/contributions/packages/ui/ContributionManagerUI.java:203
+msgid "Removing..."
+msgstr ""
 
 #: EditorHeader.java:300
 msgid "Rename"
@@ -1353,9 +1678,23 @@ msgstr "{0}வின் தற்போதைய பதிப்பை மாற
 msgid "Replace with:"
 msgstr "இதாக மாற்று:"
 
+#: ../../../../../arduino-core/src/processing/app/I18n.java:28
+msgid "Retired"
+msgstr ""
+
 #: Preferences.java:113
 msgid "Romanian"
 msgstr "ரோமானியம்"
+
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:83
+#, java-format
+msgid "Running recipe: {0}"
+msgstr ""
+
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:82
+#, java-format
+msgid "Running: {0}"
+msgstr ""
 
 #: Preferences.java:114
 msgid "Russian"
@@ -1373,10 +1712,6 @@ msgstr "எனச் சேமி..."
 #: Editor.java:2317
 msgid "Save Canceled."
 msgstr "சேமிப்பு ரத்து செய்யப்பட்டது."
-
-#: Editor.java:2467
-msgid "Save changes before export?"
-msgstr "ஏற்றுமதி செய்யும் முன் மாற்றங்களை செமிக்கவா?"
 
 #: Editor.java:2020
 #, java-format
@@ -1419,17 +1754,42 @@ msgstr "உங்கள் வரைவுக்குள் நகலெடு�
 msgid "Select new sketchbook location"
 msgstr "புதிய வரைவுப்புத்தக இடத்தை தேர்வு செய்யவும்"
 
+#: ../../../../../app/src/cc/arduino/contributions/libraries/ui/ContributedLibraryTableCell.java:237
+#: ../../../../../app/src/cc/arduino/contributions/packages/ui/ContributedPlatformTableCell.java:249
+msgid "Select version"
+msgstr ""
+
 #: ../../../processing/app/debug/Compiler.java:146
 msgid "Selected board depends on '{0}' core (not installed)."
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Base.java:374
+msgid "Selected board is not available"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Base.java:423
+msgid "Selected library is not available"
 msgstr ""
 
 #: SerialMonitor.java:93
 msgid "Send"
 msgstr "அனுப்பு"
 
+#: ../../../../../arduino-core/src/processing/app/I18n.java:32
+msgid "Sensors"
+msgstr ""
+
 #: EditorToolbar.java:41 EditorToolbar.java:46 Editor.java:669
 msgid "Serial Monitor"
 msgstr "தொடர்நிலை கண்காணிப்புத்திரை"
+
+#: ../../../../../app/src/processing/app/Editor.java:804
+msgid "Serial Plotter"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Editor.java:2516
+msgid "Serial monitor not available while plotter is open"
+msgstr ""
 
 #: Serial.java:194
 #, java-format
@@ -1445,6 +1805,19 @@ msgid ""
 "Retry the upload with another serial port?"
 msgstr "தொடர்நிலை துறை {0} காணவில்லை.\nவேறு தொடர்நிலை துறை கொண்டு மேலேற்ற முயற்சிக்கவும்?"
 
+#: ../../../../../app/src/processing/app/Editor.java:65
+msgid "Serial ports"
+msgstr ""
+
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:84
+#, java-format
+msgid "Setting build path to {0}"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:450
+msgid "Settings"
+msgstr ""
+
 #: Base.java:1681
 msgid "Settings issues"
 msgstr "அமைப்பு சிக்கல்கள்"
@@ -1453,13 +1826,13 @@ msgstr "அமைப்பு சிக்கல்கள்"
 msgid "Show Sketch Folder"
 msgstr "வரைவு உறையை காட்டுக"
 
-#: ../../../processing/app/EditorStatus.java:468
-msgid "Show verbose output during compilation"
-msgstr ""
-
 #: Preferences.java:387
 msgid "Show verbose output during: "
 msgstr "இதன் போது வேர்போசு வெளியீட்டை காண்பிக்கவும்:"
+
+#: ../../../../../arduino-core/src/processing/app/I18n.java:31
+msgid "Signal Input/Output"
+msgstr ""
 
 #: Editor.java:607
 msgid "Sketch"
@@ -1514,8 +1887,8 @@ msgstr "வரைவுப்புத்தக இடம்:"
 msgid "Sketchbook path not defined"
 msgstr ""
 
-#: ../../../processing/app/Base.java:785
-msgid "Sketches (*.ino, *.pde)"
+#: ../../../../../app/src/processing/app/Preferences.java:185
+msgid "Slovak"
 msgstr ""
 
 #: ../../../processing/app/Preferences.java:152
@@ -1544,6 +1917,14 @@ msgstr "மன்னிக்கவும், \"{0}\"என்று ஏற்�
 msgid "Spanish"
 msgstr "ஸ்பானியம்"
 
+#: ../../../../../app/src/processing/app/Base.java:2333
+msgid "Specified folder/zip file does not contain a valid library"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Base.java:466
+msgid "Starting..."
+msgstr ""
+
 #: Base.java:540
 msgid "Sunshine"
 msgstr "சூர்யோதயம்"
@@ -1556,8 +1937,16 @@ msgstr ""
 msgid "System Default"
 msgstr ""
 
+#: ../../../../../app/src/processing/app/Preferences.java:188
+msgid "Talossan"
+msgstr ""
+
 #: Preferences.java:116
 msgid "Tamil"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/i18n/Languages.java:100
+msgid "Thai"
 msgstr ""
 
 #: debug/Compiler.java:414
@@ -1572,6 +1961,13 @@ msgstr ""
 msgid "The Client class has been renamed EthernetClient."
 msgstr "Client class, EthernetClient என பெயர்மாற்றப்பட்டுள்ளது."
 
+#: ../../../../../app/src/cc/arduino/contributions/BuiltInCoreIsNewerCheck.java:96
+#, java-format
+msgid ""
+"The IDE includes an updated {0} package, but you're using an older one.\n"
+"Do you want to upgrade {0}?"
+msgstr ""
+
 #: debug/Compiler.java:420
 msgid "The Server class has been renamed EthernetServer."
 msgstr "Server class, EthernetServer என பெயர்மாற்றப்பட்டுள்ளது."
@@ -1579,10 +1975,6 @@ msgstr "Server class, EthernetServer என பெயர்மாற்றப்
 #: debug/Compiler.java:432
 msgid "The Udp class has been renamed EthernetUdp."
 msgstr "Udp class, EthernetUdp என பெயர்மாற்றப்பட்டுள்ளது."
-
-#: Base.java:192
-msgid "The error message follows, however Arduino should run fine."
-msgstr "பிழை செய்திகள் வரும், ஆனாலும் Arduino நன்றாகவே இயங்கும்."
 
 #: Editor.java:2147
 #, java-format
@@ -1651,10 +2043,10 @@ msgid ""
 "himself in the third person."
 msgstr "வரைவுறை இல்லை.\nArduino இயல்பான வரைவுப்புத்தக இடத்திற்கு மாறியபின்,\nதேவைப்பட்டால் புதிய வரைவுப்புத்தக உறையை உருவாக்கும். \nArduino தன்னைபற்றியே மூன்றாவது மனிதன் போல \nபேசுவதை நிறுத்திக்கொள்ளும்."
 
-#: ../../../processing/app/debug/Compiler.java:201
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:514
 msgid ""
-"Third-party platform.txt does not define compiler.path. Please report this "
-"to the third-party hardware maintainer."
+"The specified sketchbook folder contains your copy of the IDE.\n"
+"Please choose a different folder for your sketchbook."
 msgstr ""
 
 #: Sketch.java:1075
@@ -1664,17 +2056,39 @@ msgid ""
 "I ain't not doin nuthin'."
 msgstr "இந்த கோப்பு நீங்கள் நகலெடுக்க முயலும் இடத்தில் \nஏற்கனவே செர்கப்பட்டுவிட்டது.\nநான் என்னால் முடிந்த அனைத்தையும் செய்துவிட்டேன்."
 
-#: ../../../processing/app/EditorStatus.java:467
-msgid "This report would have more information with"
+#: ../../../../../app/src/cc/arduino/contributions/libraries/ui/LibraryManagerUI.java:257
+msgid ""
+"This library is not listed on Library Manager. You won't be able to reinstall it from here.\n"
+"Are you sure you want to delete it?"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/EditorStatus.java:349
+msgid ""
+"This report would have more information with\n"
+"\"Show verbose output during compilation\"\n"
+"option enabled in File -> Preferences.\n"
 msgstr ""
 
 #: Base.java:535
 msgid "Time for a Break"
 msgstr "இடைவேளைக்கான நேரம்"
 
+#: ../../../../../arduino-core/src/processing/app/I18n.java:34
+msgid "Timing"
+msgstr ""
+
+#: ../../../cc/arduino/contributions/packages/ContributionInstaller.java:94
+#, java-format
+msgid "Tool {0} is not available for your operating system."
+msgstr ""
+
 #: Editor.java:663
 msgid "Tools"
 msgstr "கருவிகள்"
+
+#: ../../../../../app/src/cc/arduino/contributions/libraries/ui/LibraryManagerUI.java:97
+msgid "Topic"
+msgstr ""
 
 #: Editor.java:1070
 msgid "Troubleshooting"
@@ -1682,6 +2096,11 @@ msgstr "சரிப்படுத்துதல்"
 
 #: ../../../processing/app/Preferences.java:117
 msgid "Turkish"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/contributions/ui/InstallerJDialog.java:109
+#: ../../../../../app/src/cc/arduino/contributions/libraries/ui/LibraryManagerUI.java:105
+msgid "Type"
 msgstr ""
 
 #: ../../../processing/app/Editor.java:2507
@@ -1694,6 +2113,11 @@ msgstr ""
 
 #: ../../../processing/app/Preferences.java:118
 msgid "Ukrainian"
+msgstr ""
+
+#: ../../../../../arduino-core/src/cc/arduino/packages/uploaders/SSHUploader.java:142
+#, java-format
+msgid "Unable to connect to {0}"
 msgstr ""
 
 #: ../../../processing/app/Editor.java:2524
@@ -1709,18 +2133,41 @@ msgstr ""
 msgid "Unable to connect: wrong password?"
 msgstr ""
 
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:65
+#, java-format
+msgid "Unable to find {0} in {1}"
+msgstr ""
+
 #: ../../../processing/app/Editor.java:2512
 msgid "Unable to open serial monitor"
 msgstr ""
 
-#: Sketch.java:1432
-#, java-format
-msgid "Uncaught exception type: {0}"
-msgstr "பிடிக்கமுடியாத விதிவிலக்கு வகை: {0}"
+#: ../../../../../app/src/processing/app/Editor.java:2709
+msgid "Unable to open serial plotter"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/contributions/libraries/ui/LibraryManagerUI.java:94
+#: ../../../../../app/src/cc/arduino/contributions/packages/ui/ContributionManagerUI.java:89
+msgid "Unable to reach Arduino.cc due to possible network issues."
+msgstr ""
+
+#: ../../../../../arduino-core/src/processing/app/I18n.java:38
+msgid "Uncategorized"
+msgstr ""
 
 #: Editor.java:1133 Editor.java:1355
 msgid "Undo"
 msgstr "திரும்பப்பெறுக"
+
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:85
+#, java-format
+msgid "Unhandled type {0} in context key {1}"
+msgstr ""
+
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:86
+#, java-format
+msgid "Unknown sketch file extension: {0}"
+msgstr ""
 
 #: Platform.java:168
 msgid ""
@@ -1729,6 +2176,11 @@ msgid ""
 "\"launcher=/path/to/app\" line to preferences.txt"
 msgstr "குறிப்பிடப்படாத இயங்குதளம், எந்த எவுதிரையும் இல்லை.\nURL (அ) உரைகளை திறக்க, \n\"launcher=/path/to/app\" என்ற வரியை preferences.txtல் சேர்க்கவும்"
 
+#: ../../../../../app/src/cc/arduino/contributions/libraries/ui/DropdownUpdatableLibrariesItem.java:27
+#: ../../../../../app/src/cc/arduino/contributions/packages/ui/DropdownUpdatableCoresItem.java:27
+msgid "Updatable"
+msgstr ""
+
 #: UpdateCheck.java:111
 msgid "Update"
 msgstr "புதிய பதிப்பை தேடு"
@@ -1736,6 +2188,25 @@ msgstr "புதிய பதிப்பை தேடு"
 #: Preferences.java:428
 msgid "Update sketch files to new extension on save (.pde -> .ino)"
 msgstr "சேமிக்கும் பொது வரைவு கோப்புகளை புதிய நீட்டிப்புகளுக்கு புதுப்பிக்கவும் (.pde -> .ino)"
+
+#: ../../../../../app/src/cc/arduino/contributions/ContributionsSelfCheck.java:88
+#, java-format
+msgid "Updates available for some of your {0}boards{1}"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/contributions/ContributionsSelfCheck.java:90
+#, java-format
+msgid "Updates available for some of your {0}boards{1} and {2}libraries{3}"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/contributions/ContributionsSelfCheck.java:86
+#, java-format
+msgid "Updates available for some of your {0}libraries{1}"
+msgstr ""
+
+#: ../../../cc/arduino/contributions/libraries/LibraryInstaller.java:167
+msgid "Updating list of installed libraries"
+msgstr ""
 
 #: EditorToolbar.java:41 Editor.java:545
 msgid "Upload"
@@ -1769,6 +2240,16 @@ msgstr "தேடுதலுக்கு தெரிவுகளை பயன�
 msgid "Use external editor"
 msgstr "புற திருத்தியை பயன்படுத்துக"
 
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:493
+#: ../../../../../app/src/cc/arduino/view/preferences/Preferences.java:499
+msgid "Username:"
+msgstr ""
+
+#: ../../../processing/app/debug/Compiler.java:410
+#, java-format
+msgid "Using library {0} at version {1} in folder: {2} {3}"
+msgstr ""
+
 #: ../../../processing/app/debug/Compiler.java:94
 #, java-format
 msgid "Using library {0} in folder: {1} {2}"
@@ -1783,13 +2264,39 @@ msgstr ""
 msgid "Verify"
 msgstr "சரிபார்க்க"
 
-#: Editor.java:609
-msgid "Verify / Compile"
-msgstr "உறுதிப்படுத்து / தொகுப்பி"
-
 #: Preferences.java:400
 msgid "Verify code after upload"
 msgstr "பதிவேற்றியவுடன் குறியீட்டை சரிபார்க்கவும்"
+
+#: ../../../../../app/src/processing/app/Editor.java:725
+msgid "Verify/Compile"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Base.java:451
+msgid "Verifying and uploading..."
+msgstr ""
+
+#: ../../../cc/arduino/contributions/DownloadableContributionsDownloader.java:71
+msgid "Verifying archive integrity..."
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Base.java:454
+msgid "Verifying..."
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/contributions/libraries/ui/ContributedLibraryTableCell.java:328
+#, java-format
+msgid "Version <b>{0}</b>"
+msgstr ""
+
+#: ../../../../../app/src/cc/arduino/contributions/libraries/ui/ContributedLibraryTableCell.java:326
+msgid "Version unknown"
+msgstr ""
+
+#: ../../../cc/arduino/contributions/libraries/ContributedLibrary.java:97
+#, java-format
+msgid "Version {0}"
+msgstr ""
 
 #: ../../../processing/app/Preferences.java:154
 msgid "Vietnamese"
@@ -1798,6 +2305,16 @@ msgstr ""
 #: Editor.java:1105
 msgid "Visit Arduino.cc"
 msgstr "Arduino.cc செல்க"
+
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:90
+#, java-format
+msgid "WARNING: Category '{0}' in library {1} is not valid. Setting to '{2}'"
+msgstr ""
+
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:93
+#, java-format
+msgid "WARNING: Spurious {0} folder in '{1}' library"
+msgstr ""
 
 #: ../../../processing/app/debug/Compiler.java:115
 #, java-format
@@ -1809,6 +2326,48 @@ msgstr ""
 #: Base.java:2128
 msgid "Warning"
 msgstr "எச்சரிக்கை"
+
+#: ../../../processing/app/debug/Compiler.java:1295
+msgid ""
+"Warning: This core does not support exporting sketches. Please consider "
+"upgrading it or contacting its author"
+msgstr ""
+
+#: ../../../cc/arduino/utils/ArchiveExtractor.java:197
+#, java-format
+msgid "Warning: file {0} links to an absolute path {1}"
+msgstr ""
+
+#: ../../../cc/arduino/contributions/packages/ContributionsIndexer.java:133
+msgid "Warning: forced trusting untrusted contributions"
+msgstr ""
+
+#: ../../../cc/arduino/contributions/packages/ContributionInstaller.java:217
+#, java-format
+msgid "Warning: forced untrusted script execution ({0})"
+msgstr ""
+
+#: ../../../cc/arduino/contributions/packages/ContributionInstaller.java:212
+#, java-format
+msgid "Warning: non trusted contribution, skipping script execution ({0})"
+msgstr ""
+
+#: ../../../processing/app/debug/LegacyTargetPlatform.java:158
+#, java-format
+msgid ""
+"Warning: platform.txt from core '{0}' contains deprecated {1}, automatically"
+" converted to {2}. Consider upgrading this core."
+msgstr ""
+
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:91
+msgid ""
+"Warning: platform.txt from core '{0}' misses property '{1}', using default "
+"value '{2}'. Consider upgrading this core."
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Preferences.java:190
+msgid "Western Frisian"
+msgstr ""
 
 #: debug/Compiler.java:444
 msgid "Wire.receive() has been renamed Wire.read()."
@@ -1840,17 +2399,21 @@ msgstr "நீங்கள் என்னை ஏமாற்ற முடிய
 msgid "You can't have a .cpp file with the same name as the sketch."
 msgstr "நீங்கள் வரைவின் பெயரிலேயே .cpp கோப்பை உருவாக்க முடியாது."
 
+#: ../../../../../app/src/processing/app/Base.java:2312
+msgid "You can't import a folder that contains your sketchbook"
+msgstr ""
+
 #: Sketch.java:421
 msgid ""
 "You can't rename the sketch to \"{0}\"\n"
 "because the sketch already has a .cpp file with that name."
 msgstr "நீங்கள்  \"{0}\" என்று வரைவை பெயர்மாற்றம் செய்ய முடியாது\nஏனென்றால் அந்த வரைவு ஏற்கனவே அதே பெயரில் ஒரு .cpp கோப்பை கொண்டுள்ளது."
 
-#: Sketch.java:861
+#: ../../../../../app/src/processing/app/Sketch.java:659
 msgid ""
 "You can't save the sketch as \"{0}\"\n"
-"because the sketch already has a .cpp file with that name."
-msgstr "\"{0}\" என வரைவை நீங்கள் சேமிக்க முடியாது\nஏனென்றால், ஏற்கனவே அந்தப்பெயரில் .cpp கோப்பு உள்ளது."
+"because the sketch already has a file with that name."
+msgstr ""
 
 #: Sketch.java:883
 msgid ""
@@ -1873,6 +2436,18 @@ msgid ""
 "for the day. How about going for a walk instead?"
 msgstr "நீங்கள் புதிய வரைவுகளை தானாக பெயரிடும் இன்றைய உச்சவரம்பை எட்டிவிட்டீர்கள்.\n சிறிது நடைபயிற்சி மேற்கொள்ளலாமே!?"
 
+#: ../../../processing/app/BaseNoGui.java:768
+msgid ""
+"Your copy of the IDE is installed in a subfolder of your settings folder.\n"
+"Please move the IDE to another folder."
+msgstr ""
+
+#: ../../../processing/app/BaseNoGui.java:771
+msgid ""
+"Your copy of the IDE is installed in a subfolder of your sketchbook.\n"
+"Please move the IDE to another folder."
+msgstr ""
+
 #: Base.java:2638
 msgid "ZIP files or folders"
 msgstr ""
@@ -1886,13 +2461,13 @@ msgstr ""
 msgid "\".{0}\" is not a valid extension."
 msgstr "\".{0}\" சரியான நீடிப்பு கிடையாது."
 
-#: SketchCode.java:258
+#: ../../../../../arduino-core/src/processing/app/SketchCode.java:201
 #, java-format
 msgid ""
-"\"{0}\" contains unrecognized characters.If this code was created with an "
-"older version of Arduino,you may need to use Tools -> Fix Encoding & Reload "
-"to updatethe sketch to use UTF-8 encoding. If not, you may need todelete the"
-" bad characters to get rid of this warning."
+"\"{0}\" contains unrecognized characters. If this code was created with an "
+"older version of Arduino, you may need to use Tools -> Fix Encoding & Reload"
+" to update the sketch to use UTF-8 encoding. If not, you may need to delete "
+"the bad characters to get rid of this warning."
 msgstr ""
 
 #: debug/Compiler.java:409
@@ -1962,17 +2537,9 @@ msgstr ""
 msgid "createNewFile() returned false"
 msgstr "createNewFile() தவறென கூறுகிறது"
 
-#: ../../../processing/app/EditorStatus.java:469
-msgid "enabled in File > Preferences."
+#: ../../../../../app/src/processing/app/Editor.java:1352
+msgid "http://www.arduino.cc/"
 msgstr ""
-
-#: Base.java:2090
-msgid "environment"
-msgstr "சுற்றுச்சூழல்"
-
-#: Editor.java:1108
-msgid "http://arduino.cc/"
-msgstr "http://arduino.cc/"
 
 #: UpdateCheck.java:118
 msgid "http://www.arduino.cc/en/Main/Software"
@@ -1982,26 +2549,14 @@ msgstr "http://www.arduino.cc/en/Main/Software"
 msgid "http://www.arduino.cc/latest.txt"
 msgstr "http://www.arduino.cc/latest.txt"
 
-#: Base.java:2075
-msgid "http://www.arduino.cc/playground/Learning/Linux"
-msgstr "http://www.arduino.cc/playground/Learning/Linux"
-
 #: Preferences.java:625
 #, java-format
 msgid "ignoring invalid font size {0}"
 msgstr "தவறான எழுத்துரு அளவை {0} அளச்சியப்படுத்துகிறது"
 
-#: Base.java:2080
-msgid "index.html"
-msgstr "index.html"
-
 #: Editor.java:936 Editor.java:943
 msgid "name is null"
 msgstr "பெயர் வெற்றாக உள்ளது"
-
-#: Base.java:2090
-msgid "platforms.html"
-msgstr "platforms.html"
 
 #: Editor.java:932
 msgid "serialMenu is null"
@@ -2022,10 +2577,51 @@ msgstr ""
 msgid "upload"
 msgstr "பதிவேற்று"
 
+#: ../../../../../app/src/cc/arduino/contributions/packages/ui/ContributedPlatformTableCell.java:324
+#, java-format
+msgid "version <b>{0}</b>"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/Editor.java:2243
+#, java-format
+msgid "{0} - {1} | Arduino {2}"
+msgstr ""
+
+#: ../../../cc/arduino/contributions/SignatureVerificationFailedException.java:39
+#: ../../../cc/arduino/contributions/SignatureVerificationFailedException.java:43
+#, java-format
+msgid "{0} file signature verification failed"
+msgstr ""
+
+#: ../../../cc/arduino/contributions/packages/ContributionInstaller.java:310
+#, java-format
+msgid "{0} file signature verification failed. File ignored."
+msgstr ""
+
 #: Editor.java:380
 #, java-format
 msgid "{0} files added to the sketch."
 msgstr "{0} கோப்புகள் வரைவில் சேர்கப்பட்டுள்ளன."
+
+#: ../../../../../app/src/processing/app/Base.java:1201
+#, java-format
+msgid "{0} libraries"
+msgstr ""
+
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:76
+#, java-format
+msgid "{0} must be a folder"
+msgstr ""
+
+#: ../../../../../app/src/processing/app/EditorLineStatus.java:109
+#, java-format
+msgid "{0} on {1}"
+msgstr ""
+
+#: ../../../../../arduino-core/src/cc/arduino/Compiler.java:78
+#, java-format
+msgid "{0} pattern is missing"
+msgstr ""
 
 #: debug/Compiler.java:365
 #, java-format
@@ -2036,11 +2632,6 @@ msgstr "{0},{1}என திருப்பியது"
 #, java-format
 msgid "{0} | Arduino {1}"
 msgstr "{0} | Arduino {1}"
-
-#: Editor.java:1874
-#, java-format
-msgid "{0}.html"
-msgstr "{0}.html"
 
 #: ../../../processing/app/Base.java:519
 #, java-format

@@ -1,27 +1,37 @@
 package processing.app;
 
-import static processing.app.I18n._;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static processing.app.I18n.tr;
 
 public class SketchData {
 
-  /** main pde file for this sketch. */
+  public static final List<String> SKETCH_EXTENSIONS = Arrays.asList("ino", "pde");
+  public static final List<String> OTHER_ALLOWED_EXTENSIONS = Arrays.asList("c", "cpp", "h", "hh", "hpp", "s");
+  public static final List<String> EXTENSIONS = Stream.concat(SKETCH_EXTENSIONS.stream(), OTHER_ALLOWED_EXTENSIONS.stream()).collect(Collectors.toList());
+
+  /**
+   * main pde file for this sketch.
+   */
   private File primaryFile;
 
-  /** folder that contains this sketch */
+  /**
+   * folder that contains this sketch
+   */
   private File folder;
 
-  /** data folder location for this sketch (may not exist yet) */
+  /**
+   * data folder location for this sketch (may not exist yet)
+   */
   private File dataFolder;
 
-  /** code folder location for this sketch (may not exist yet) */
+  /**
+   * code folder location for this sketch (may not exist yet)
+   */
   private File codeFolder;
 
   /**
@@ -77,15 +87,15 @@ public class SketchData {
 
   /**
    * Build the list of files.
-   * <P>
+   * <p>
    * Generally this is only done once, rather than
    * each time a change is made, because otherwise it gets to be
    * a nightmare to keep track of what files went where, because
    * not all the data will be saved to disk.
-   * <P>
+   * <p>
    * This also gets called when the main sketch file is renamed,
    * because the sketch has to be reloaded from a different folder.
-   * <P>
+   * <p>
    * Another exception is when an external editor is in use,
    * in which case the load happens each time "run" is hit.
    */
@@ -95,14 +105,15 @@ public class SketchData {
 
     // get list of files in the sketch folder
     String list[] = folder.list();
+    if (list == null) {
+      throw new IOException("Unable to list files from " + folder);
+    }
 
     // reset these because load() may be called after an
     // external editor event. (fix for 0099)
 //    codeDocs = new SketchCodeDoc[list.length];
     clearCodeDocs();
 //    data.setCodeDocs(codeDocs);
-    
-    List<String> extensions = getExtensions();
 
     for (String filename : list) {
       // Ignoring the dot prefix files is especially important to avoid files
@@ -116,7 +127,7 @@ public class SketchData {
       // figure out the name without any extension
       String base = filename;
       // now strip off the .pde and .java extensions
-      for (String extension : extensions) {
+      for (String extension : EXTENSIONS) {
         if (base.toLowerCase().endsWith("." + extension)) {
           base = base.substring(0, base.length() - (extension.length() + 1));
 
@@ -125,14 +136,14 @@ public class SketchData {
           if (BaseNoGui.isSanitaryName(base)) {
             addCode(new SketchCode(new File(folder, filename)));
           } else {
-            System.err.println(I18n.format("File name {0} is invalid: ignored", filename));
+            System.err.println(I18n.format(tr("File name {0} is invalid: ignored"), filename));
           }
         }
       }
     }
 
     if (getCodeCount() == 0)
-      throw new IOException(_("No valid code files found"));
+      throw new IOException(tr("No valid code files found"));
 
     // move the main class to the first tab
     // start at 1, if it's at zero, don't bother
@@ -168,13 +179,6 @@ public class SketchData {
    */
   public String getDefaultExtension() {
     return "ino";
-  }
-
-  /**
-   * Returns a String[] array of proper extensions.
-   */
-  public List<String> getExtensions() {
-    return Arrays.asList("ino", "pde", "c", "cpp", "h");
   }
 
   /**

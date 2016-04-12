@@ -22,7 +22,13 @@
 
 package processing.app;
 
-import java.io.*;
+import org.apache.commons.compress.utils.IOUtils;
+import processing.app.legacy.PApplet;
+
+import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Random;
@@ -32,21 +38,9 @@ import java.io.IOException;
 import java.util.ArrayList; 
 import java.util.List; 
 
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JProgressBar;
-import javax.swing.WindowConstants;
+import static processing.app.I18n.tr;
 
 
-import processing.app.legacy.PApplet;
-import static processing.app.I18n._;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 /**
  * Threaded class to check for updates in the background.
  * <P>
@@ -295,7 +289,7 @@ public class UpdateCheck implements Runnable {
 //	}
 //=======
   Base base;
-  String downloadURL = _("http://www.arduino.cc/latest.txt");
+  String downloadURL = tr("http://www.arduino.cc/latest.txt");
 
   static final long ONE_DAY = 24 * 60 * 60 * 1000;
 
@@ -314,11 +308,11 @@ public class UpdateCheck implements Runnable {
     Random r = new Random();
     long id = r.nextLong();
 
-    String idString = Preferences.get("update.id");
+    String idString = PreferencesData.get("update.id");
     if (idString != null) {
       id = Long.parseLong(idString);
     } else {
-      Preferences.set("update.id", String.valueOf(id));
+      PreferencesData.set("update.id", String.valueOf(id));
     }
 
     try {
@@ -333,7 +327,7 @@ public class UpdateCheck implements Runnable {
       
       int latest = readInt(downloadURL + "?" + info);
 
-      String lastString = Preferences.get("update.last");
+      String lastString = PreferencesData.get("update.last");
       long now = System.currentTimeMillis();
       if (lastString != null) {
         long when = Long.parseLong(lastString);
@@ -342,25 +336,25 @@ public class UpdateCheck implements Runnable {
           return;
         }
       }
-      Preferences.set("update.last", String.valueOf(now));
+      PreferencesData.set("update.last", String.valueOf(now));
 
       String prompt =
-        _("A new version of Arduino is available,\n" +
+        tr("A new version of Arduino is available,\n" +
           "would you like to visit the Arduino download page?");
         
       if (base.activeEditor != null) {
         if (latest > BaseNoGui.REVISION) {
-          Object[] options = { _("Yes"), _("No") };
+          Object[] options = { tr("Yes"), tr("No") };
           int result = JOptionPane.showOptionDialog(base.activeEditor,
                                                     prompt,
-                                                    _("Update"),
+                                                    tr("Update"),
                                                     JOptionPane.YES_NO_OPTION,
                                                     JOptionPane.QUESTION_MESSAGE,
                                                     null,
                                                     options,
                                                     options[0]);
           if (result == JOptionPane.YES_OPTION) {
-            Base.openURL(_("http://www.arduino.cc/en/Main/Software"));
+            Base.openURL(tr("http://www.arduino.cc/en/Main/Software"));
           }
         }
       }
@@ -371,11 +365,14 @@ public class UpdateCheck implements Runnable {
   }
 
 
-  protected int readInt(String filename) throws Exception {
+  protected int readInt(String filename) throws IOException {
     URL url = new URL(filename);
-    InputStream stream = url.openStream();
-    InputStreamReader isr = new InputStreamReader(stream);
-    BufferedReader reader = new BufferedReader(isr);
-    return Integer.parseInt(reader.readLine());
+    BufferedReader reader = null;
+    try {
+      reader = new BufferedReader(new InputStreamReader(url.openStream()));
+      return Integer.parseInt(reader.readLine());
+    } finally {
+      IOUtils.closeQuietly(reader);
+    }
   }
 }

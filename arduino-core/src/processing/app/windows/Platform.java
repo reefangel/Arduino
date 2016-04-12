@@ -22,130 +22,58 @@
 
 package processing.app.windows;
 
-import com.sun.jna.Library;
-import com.sun.jna.Native;
-
-import org.apache.commons.exec.CommandLine;
-import org.apache.commons.exec.Executor;
-
-import processing.app.PreferencesData;
-import processing.app.debug.TargetPackage;
+import cc.arduino.os.windows.FolderFinderInWindowsEnvVar;
+import cc.arduino.os.windows.FolderFinderInWindowsRegistry;
 import processing.app.legacy.PApplet;
 import processing.app.legacy.PConstants;
-import processing.app.tools.ExternalProcessExecutor;
-import processing.app.windows.Registry.REGISTRY_ROOT_KEY;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.Map;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.LinkedList;
+import java.util.List;
 
-
-// http://developer.apple.com/documentation/QuickTime/Conceptual/QT7Win_Update_Guide/Chapter03/chapter_3_section_1.html
-// HKEY_LOCAL_MACHINE\SOFTWARE\Apple Computer, Inc.\QuickTime\QTSysDir
-
-// HKEY_LOCAL_MACHINE\SOFTWARE\JavaSoft\Java Development Kit\CurrentVersion -> 1.6 (String)
-// HKEY_LOCAL_MACHINE\SOFTWARE\JavaSoft\Java Development Kit\CurrentVersion\1.6\JavaHome -> c:\jdk-1.6.0_05
 
 public class Platform extends processing.app.Platform {
 
-  static final String openCommand =
-    System.getProperty("user.dir").replace('/', '\\') +
-    "\\arduino.exe \"%1\"";
-  static final String DOC = "Arduino.Document";
+  private File settingsFolder;
+  private File defaultSketchbookFolder;
 
-  public void init() {
+  public void init() throws Exception {
     super.init();
 
-    checkAssociations();
-    checkQuickTime();
     checkPath();
+    recoverSettingsFolderPath();
+    recoverDefaultSketchbookFolder();
   }
 
+  private void recoverSettingsFolderPath() throws Exception {
+    FolderFinderInWindowsRegistry findInUserShellFolders = new FolderFinderInWindowsRegistry(null, "Documents", "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders", "Local AppData");
+    FolderFinderInWindowsRegistry findInShellFolders = new FolderFinderInWindowsRegistry(findInUserShellFolders, "Documents", "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders", "Local AppData");
 
-  /**
-   * Make sure that .pde files are associated with processing.exe.
-   */
-  protected void checkAssociations() {
-    try {
-      String knownCommand =
-        Registry.getStringValue(REGISTRY_ROOT_KEY.CLASSES_ROOT,
-                                DOC + "\\shell\\open\\command", "");
-      if (knownCommand == null) {
-        if (PreferencesData.getBoolean("platform.auto_file_type_associations")) {
-          setAssociations();
-        }
-
-      } else if (!knownCommand.equals(openCommand)) {
-        // If the value is set differently, just change the registry setting.
-        if (PreferencesData.getBoolean("platform.auto_file_type_associations")) {
-          setAssociations();
-        }
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    Path path = findInShellFolders.find();
+    this.settingsFolder = path.resolve("Arduino15").toFile();
   }
 
+  private Path recoverOldSettingsFolderPath() throws Exception {
+    FolderFinderInWindowsRegistry findInUserShellFolders = new FolderFinderInWindowsRegistry(null, "Documents", "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders", "AppData");
+    FolderFinderInWindowsRegistry findInShellFolders = new FolderFinderInWindowsRegistry(findInUserShellFolders, "Documents", "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders", "AppData");
 
-  /**
-   * Associate .pde files with this version of Processing.
-   */
-  protected void setAssociations() throws UnsupportedEncodingException {
-    if (Registry.createKey(REGISTRY_ROOT_KEY.CLASSES_ROOT,
-                           "", ".ino") &&
-        Registry.setStringValue(REGISTRY_ROOT_KEY.CLASSES_ROOT,
-                                ".ino", "", DOC) &&
-
-        Registry.createKey(REGISTRY_ROOT_KEY.CLASSES_ROOT, "", DOC) &&
-        Registry.setStringValue(REGISTRY_ROOT_KEY.CLASSES_ROOT, DOC, "",
-                                "Arduino Source Code") &&
-
-        Registry.createKey(REGISTRY_ROOT_KEY.CLASSES_ROOT,
-                           DOC, "shell") &&
-        Registry.createKey(REGISTRY_ROOT_KEY.CLASSES_ROOT,
-                           DOC + "\\shell", "open") &&
-        Registry.createKey(REGISTRY_ROOT_KEY.CLASSES_ROOT,
-                           DOC + "\\shell\\open", "command") &&
-        Registry.setStringValue(REGISTRY_ROOT_KEY.CLASSES_ROOT,
-                                DOC + "\\shell\\open\\command", "",
-                                openCommand)) {
-      // everything ok
-      // hooray!
-
-    } else {
-      PreferencesData.setBoolean("platform.auto_file_type_associations", false);
-    }
+    Path path = findInShellFolders.find();
+    return path.resolve("Arduino15");
   }
 
+  private void recoverDefaultSketchbookFolder() throws Exception {
+    FolderFinderInWindowsEnvVar findInUserProfile = new FolderFinderInWindowsEnvVar(null, "Documents", "USERPROFILE");
+    FolderFinderInWindowsRegistry findInUserShellFolders = new FolderFinderInWindowsRegistry(findInUserProfile, "Documents", "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders", "Personal");
+    FolderFinderInWindowsRegistry findInShellFolders = new FolderFinderInWindowsRegistry(findInUserShellFolders, "Documents", "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders", "Personal");
 
-  /**
-   * Find QuickTime for Java installation.
-   */
-  protected void checkQuickTime() {
-    try {
-      String qtsystemPath =
-        Registry.getStringValue(REGISTRY_ROOT_KEY.LOCAL_MACHINE,
-                                "Software\\Apple Computer, Inc.\\QuickTime",
-                                "QTSysDir");
-      // Could show a warning message here if QT not installed, but that
-      // would annoy people who don't want anything to do with QuickTime.
-      if (qtsystemPath != null) {
-        File qtjavaZip = new File(qtsystemPath, "QTJava.zip");
-        if (qtjavaZip.exists()) {
-          String qtjavaZipPath = qtjavaZip.getAbsolutePath();
-          String cp = System.getProperty("java.class.path");
-          System.setProperty("java.class.path",
-                             cp + File.pathSeparator + qtjavaZipPath);
-        }
-      }
-    } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
-    }
+    Path path = findInShellFolders.find();
+    this.defaultSketchbookFolder = path.resolve("Arduino").toFile();
   }
-  
-  
+
   /**
    * Remove extra quotes, slashes, and garbage from the Windows PATH.
    */
@@ -180,53 +108,14 @@ public class Platform extends processing.app.Platform {
     }
   }
 
-
-  // looking for Documents and Settings/blah/Application Data/Processing
-  public File getSettingsFolder() throws Exception {
-    // HKEY_CURRENT_USER\Software\Microsoft
-    //   \Windows\CurrentVersion\Explorer\Shell Folders
-    // Value Name: AppData
-    // Value Type: REG_SZ
-    // Value Data: path
-
-    String keyPath =
-      "Software\\Microsoft\\Windows\\CurrentVersion" +
-      "\\Explorer\\Shell Folders";
-    String appDataPath =
-      Registry.getStringValue(REGISTRY_ROOT_KEY.CURRENT_USER, keyPath, "AppData");
-
-    File dataFolder = new File(appDataPath, "Arduino15");
-    return dataFolder;
+  public File getSettingsFolder() {
+    return settingsFolder;
   }
 
 
-  // looking for Documents and Settings/blah/My Documents/Processing
-  // (though using a reg key since it's different on other platforms)
   public File getDefaultSketchbookFolder() throws Exception {
-
-    // http://support.microsoft.com/?kbid=221837&sd=RMVP
-    // http://support.microsoft.com/kb/242557/en-us
-
-    // The path to the My Documents folder is stored in the following
-    // registry key, where path is the complete path to your storage location
-
-    // HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders
-    // Value Name: Personal
-    // Value Type: REG_SZ
-    // Value Data: path
-
-    // in some instances, this may be overridden by a policy, in which case check:
-    // HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders
-
-    String keyPath =
-      "Software\\Microsoft\\Windows\\CurrentVersion" +
-      "\\Explorer\\Shell Folders";
-    String personalPath =
-      Registry.getStringValue(REGISTRY_ROOT_KEY.CURRENT_USER, keyPath, "Personal");
-
-    return new File(personalPath, "Arduino");
+    return defaultSketchbookFolder;
   }
-
 
   public void openURL(String url) throws Exception {
     // this is not guaranteed to work, because who knows if the
@@ -244,11 +133,11 @@ public class Platform extends processing.app.Platform {
     // "Access is denied" in both cygwin and the "dos" prompt.
     //Runtime.getRuntime().exec("cmd /c " + currentDir + "\\reference\\" +
     //                    referenceFile + ".html");
-    if (url.startsWith("http://")) {
+    if (url.startsWith("http") || url.startsWith("file:")) {
       // open dos prompt, give it 'start' command, which will
       // open the url properly. start by itself won't work since
       // it appears to need cmd
-      Runtime.getRuntime().exec("cmd /c start " + url);
+      Runtime.getRuntime().exec("cmd /c start \"\" \"" + url + "\"");
     } else {
       // just launching the .html file via the shell works
       // but make sure to chmod +x the .html files first
@@ -281,73 +170,52 @@ public class Platform extends processing.app.Platform {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 
-  // Code partially thanks to Richard Quirk from:
-  // http://quirkygba.blogspot.com/2009/11/setting-environment-variables-in-java.html
-
-  static WinLibC clib = (WinLibC) Native.loadLibrary("msvcrt", WinLibC.class);
-
-  public interface WinLibC extends Library {
-    //WinLibC INSTANCE = (WinLibC) Native.loadLibrary("msvcrt", WinLibC.class);
-    //libc = Native.loadLibrary("msvcrt", WinLibC.class);
-    public int _putenv(String name);
-}
-
-
-  public void setenv(String variable, String value) {
-    //WinLibC clib = WinLibC.INSTANCE;
-    clib._putenv(variable + "=" + value);
-  }
-
-
-  public String getenv(String variable) {
-    return System.getenv(variable);
-  }
-
-
-  public int unsetenv(String variable) {
-    //WinLibC clib = WinLibC.INSTANCE;
-    //clib._putenv(variable + "=");
-    //return 0;
-    return clib._putenv(variable + "=");
-  }
-
   @Override
   public String getName() {
     return PConstants.platformNames[PConstants.WINDOWS];
   }
 
   @Override
-  public String resolveDeviceAttachedTo(String serial, Map<String, TargetPackage> packages, String devicesListOutput) {
-    if (devicesListOutput == null) {
-      return super.resolveDeviceAttachedTo(serial, packages, devicesListOutput);
-    }
+  public void fixPrefsFilePermissions(File prefsFile) throws IOException {
+    //noop
+  }
 
-    try {
-      String vidPid = new ListComPortsParser().extractVIDAndPID(devicesListOutput, serial);
+  public List<File> postInstallScripts(File folder) {
+    List<File> scripts = new LinkedList<>();
+    scripts.add(new File(folder, "post_install.bat"));
+    return scripts;
+  }
 
-      if (vidPid == null) {
-        return super.resolveDeviceAttachedTo(serial, packages, devicesListOutput);
-      }
+  public List<File> preUninstallScripts(File folder) {
+    List<File> scripts = new LinkedList<>();
+    scripts.add(new File(folder, "pre_uninstall.bat"));
+    return scripts;
+  }
 
-      return super.resolveDeviceByVendorIdProductId(packages, vidPid);
-    } catch (IOException e) {
-      return super.resolveDeviceAttachedTo(serial, packages, devicesListOutput);
-    }
+  public void symlink(File something, File somewhere) throws IOException, InterruptedException {
+  }
+
+  public void link(File something, File somewhere) throws IOException, InterruptedException {
+  }
+
+  public void chmod(File file, int mode) throws IOException, InterruptedException {
   }
 
   @Override
-  public String preListAllCandidateDevices() {
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    Executor executor = new ExternalProcessExecutor(baos);
-
-    try {
-      String listComPorts = new File(System.getProperty("user.dir"), "hardware/tools/listComPorts.exe").getCanonicalPath();
-
-      CommandLine toDevicePath = CommandLine.parse(listComPorts);
-      executor.execute(toDevicePath);
-      return new String(baos.toByteArray());
-    } catch (Throwable e) {
-      return super.preListAllCandidateDevices();
+  public void fixSettingsLocation() throws Exception {
+    Path oldSettingsFolder = recoverOldSettingsFolderPath();
+    if (!Files.exists(oldSettingsFolder)) {
+      return;
     }
+
+    if (!Files.exists(oldSettingsFolder.resolve(Paths.get("preferences.txt")))) {
+      return;
+    }
+
+    if (settingsFolder.exists()) {
+      return;
+    }
+
+    Files.move(oldSettingsFolder, settingsFolder.toPath());
   }
 }

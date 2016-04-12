@@ -35,7 +35,7 @@ import cc.arduino.packages.discoverers.SerialDiscovery;
 import java.util.ArrayList;
 import java.util.List;
 
-import static processing.app.I18n._;
+import static processing.app.I18n.tr;
 
 public class DiscoveryManager {
 
@@ -51,30 +51,28 @@ public class DiscoveryManager {
       try {
         d.start();
       } catch (Exception e) {
-        System.err.println(_("Error starting discovery method: ") + d.getClass());
+        System.err.println(tr("Error starting discovery method: ") + d.getClass());
         e.printStackTrace();
       }
     }
 
-    Thread closeHook = new Thread(new Runnable() {
-      @Override
-      public void run() {
-        for (Discovery d : discoverers) {
-          try {
-            d.stop();
-          } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-          }
+    Thread closeHook = new Thread(() -> {
+      for (Discovery d : discoverers) {
+        try {
+          d.stop();
+        } catch (Exception e) {
+          e.printStackTrace(); //just printing as the JVM is terminating
         }
       }
     });
+    closeHook.setName("DiscoveryManager closeHook");
     Runtime.getRuntime().addShutdownHook(closeHook);
   }
 
   public List<BoardPort> discovery() {
     List<BoardPort> res = new ArrayList<BoardPort>();
     for (Discovery d : discoverers) {
-      res.addAll(d.discovery());
+      res.addAll(d.listDiscoveredBoards());
     }
     return res;
   }

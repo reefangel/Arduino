@@ -31,6 +31,8 @@ package cc.arduino.packages.discoverers.network;
 
 import javax.jmdns.NetworkTopologyDiscovery;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.*;
 
 public class NetworkChecker extends TimerTask {
@@ -44,7 +46,7 @@ public class NetworkChecker extends TimerTask {
     super();
     this.topologyListener = topologyListener;
     this.topology = topology;
-    this.knownAddresses = Collections.synchronizedSet(new HashSet<InetAddress>());
+    this.knownAddresses = Collections.synchronizedSet(new HashSet<>());
   }
 
   public void start(Timer timer) {
@@ -53,23 +55,30 @@ public class NetworkChecker extends TimerTask {
 
   @Override
   public void run() {
+    if (!hasNetworkInterfaces()) {
+      return;
+    }
     try {
       InetAddress[] curentAddresses = topology.getInetAddresses();
-      Set<InetAddress> current = new HashSet<InetAddress>(curentAddresses.length);
+      Set<InetAddress> current = new HashSet<>(curentAddresses.length);
       for (InetAddress address : curentAddresses) {
         current.add(address);
         if (!knownAddresses.contains(address)) {
           topologyListener.inetAddressAdded(address);
         }
       }
-      for (InetAddress address : knownAddresses) {
-        if (!current.contains(address)) {
-          topologyListener.inetAddressRemoved(address);
-        }
-      }
+      knownAddresses.stream().filter(address -> !current.contains(address)).forEach(topologyListener::inetAddressRemoved);
       knownAddresses = current;
     } catch (Exception e) {
       e.printStackTrace();
+    }
+  }
+
+  private boolean hasNetworkInterfaces() {
+    try {
+      return NetworkInterface.getNetworkInterfaces() != null;
+    } catch (SocketException e) {
+      return false;
     }
   }
 }

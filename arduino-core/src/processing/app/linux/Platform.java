@@ -22,15 +22,10 @@
 
 package processing.app.linux;
 
-import org.apache.commons.exec.CommandLine;
-import org.apache.commons.exec.Executor;
 import processing.app.PreferencesData;
-import processing.app.debug.TargetPackage;
-import processing.app.tools.ExternalProcessExecutor;
 import processing.app.legacy.PConstants;
 
-import java.io.*;
-import java.util.Map;
+import java.io.File;
 
 
 /**
@@ -42,17 +37,7 @@ public class Platform extends processing.app.Platform {
   // TODO Need to be smarter here since KDE people ain't gonna like that GTK.
   //      It may even throw a weird exception at 'em for their trouble.
   public void setLookAndFeel() throws Exception {
-    // Linux is by default even uglier than metal (Motif?).
-    // Actually, i'm using native menus, so they're even uglier
-    // and Motif-looking (Lesstif?). Ick. Need to fix this.
-    //String lfname = UIManager.getCrossPlatformLookAndFeelClassName();
-    //UIManager.setLookAndFeel(lfname);
-
-    // For 0120, trying out the gtk+ look and feel as the default.
-    // This is available in Java 1.4.2 and later, and it can't possibly
-    // be any worse than Metal. (Ocean might also work, but that's for
-    // Java 1.5, and we aren't going there yet)
-    //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+    GTKLookAndFeelFixer.installGtkPopupBugWorkaround();
   }
 
 
@@ -126,29 +111,5 @@ public class Platform extends processing.app.Platform {
   @Override
   public String getName() {
     return PConstants.platformNames[PConstants.LINUX];
-  }
-
-  @Override
-  public String resolveDeviceAttachedTo(String serial, Map<String, TargetPackage> packages, String devicesListOutput) {
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    Executor executor = new ExternalProcessExecutor(baos);
-
-    try {
-      CommandLine toDevicePath = CommandLine.parse("udevadm info -q path -n " + serial);
-      executor.execute(toDevicePath);
-      String devicePath = new String(baos.toByteArray());
-      baos.reset();
-      CommandLine commandLine = CommandLine.parse("udevadm info --query=property -p " + devicePath);
-      executor.execute(commandLine);
-      String vidPid = new UDevAdmParser().extractVIDAndPID(new String(baos.toByteArray()));
-
-      if (vidPid == null) {
-        return super.resolveDeviceAttachedTo(serial, packages, devicesListOutput);
-      }
-
-      return super.resolveDeviceByVendorIdProductId(packages, vidPid);
-    } catch (IOException e) {
-      return super.resolveDeviceAttachedTo(serial, packages, devicesListOutput);
-    }
   }
 }

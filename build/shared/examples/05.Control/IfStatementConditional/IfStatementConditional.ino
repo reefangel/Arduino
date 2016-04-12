@@ -21,7 +21,7 @@
 
 This example code is in the public domain.
 
-http://arduino.cc/en/Tutorial/IfStatement
+http://www.arduino.cc/en/Tutorial/IfStatement
 
  */
 
@@ -44,8 +44,7 @@ void loop() {
   // if the analog value is high enough, turn on the LED:
   if (analogValue > threshold) {
     digitalWrite(ledPin, HIGH);
-  }
-  else {
+  } else {
     digitalWrite(ledPin, LOW);
   }
 
