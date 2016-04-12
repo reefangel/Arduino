@@ -97,6 +97,7 @@ public class Editor extends JFrame implements RunnerListener {
   // actually used are determined by the preferences, which are shared)
   static JMenu boardsMenu;
   static JMenu serialMenu;
+  static JMenu cpuTypeMenu;
 
   static SerialMenuListener serialMenuListener;
   static SerialMonitor serialMonitor;
@@ -177,9 +178,10 @@ public class Editor extends JFrame implements RunnerListener {
           // re-add the sub-menus that are shared by all windows
           fileMenu.insert(sketchbookMenu, 2);
           fileMenu.insert(examplesMenu, 3);
-          sketchMenu.insert(importMenu, 4);
+          //sketchMenu.insert(importMenu, 4);
           toolsMenu.insert(boardsMenu, numTools);
-          toolsMenu.insert(serialMenu, numTools + 1);
+          toolsMenu.insert(cpuTypeMenu, numTools + 1);
+          toolsMenu.insert(serialMenu, numTools + 2);
         }
 
         // added for 1.0.5
@@ -188,8 +190,9 @@ public class Editor extends JFrame implements RunnerListener {
 //          System.err.println("deactivate");  // not coming through
           fileMenu.remove(sketchbookMenu);
           fileMenu.remove(examplesMenu);
-          sketchMenu.remove(importMenu);
+          //sketchMenu.remove(importMenu);
           toolsMenu.remove(boardsMenu);
+          toolsMenu.remove(cpuTypeMenu);
           toolsMenu.remove(serialMenu);
         }
       });
@@ -685,9 +688,14 @@ public class Editor extends JFrame implements RunnerListener {
     
     if (boardsMenu == null) {
       boardsMenu = new JMenu(_("Board"));
-      base.rebuildBoardsMenu(boardsMenu, this);
+      cpuTypeMenu = new JMenu(_("Processor"));
+      base.rebuildBoardsMenu(boardsMenu, cpuTypeMenu, this);
+      //Debug: rebuild imports
+      importMenu.removeAll();
+      base.rebuildImportMenu(importMenu, this);
     }
     menu.add(boardsMenu);
+    menu.add(cpuTypeMenu);
     
     if (serialMenuListener == null)
       serialMenuListener  = new SerialMenuListener();
@@ -945,6 +953,10 @@ public class Editor extends JFrame implements RunnerListener {
     if (selection != null) selection.setState(true);
     //System.out.println(item.getLabel());
     Preferences.set("serial.port", name);
+    if (name.startsWith("/dev/"))
+      Preferences.set("serial.port.file", name.substring(5));
+    else
+      Preferences.set("serial.port.file", name);
     serialMonitor.closeSerialPort();
     serialMonitor.setVisible(false);
     serialMonitor = new SerialMonitor(Preferences.get("serial.port"));
@@ -2506,7 +2518,7 @@ public class Editor extends JFrame implements RunnerListener {
     SwingUtilities.invokeLater(new Runnable() {
       public void run() {
         try {
-          Uploader uploader = new AvrdudeUploader();
+          Uploader uploader = new BasicUploader();
           if (uploader.burnBootloader()) {
             statusNotice(_("Done burning bootloader."));
           } else {
