@@ -37,6 +37,7 @@ import processing.app.packages.UserLibrary;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -47,6 +48,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.*;
 
 import static processing.app.I18n.tr;
 
@@ -1122,7 +1124,7 @@ public class Sketch {
 		
 		try
 		{
-			FileReader fileReader = new FileReader(Base.getSketchbookFolder().getPath() + "/update/feature.txt"); 
+			FileReader fileReader = new FileReader(BaseNoGui.getSketchbookFolder().getPath() + "/update/feature.txt"); 
 			BufferedReader bufferedReader = new BufferedReader(fileReader); 
 			List<String> linesdefine = new ArrayList<String>(); 
 			List<String> lineskeyword = new ArrayList<String>();
@@ -1205,7 +1207,7 @@ public class Sketch {
 	    }	    
 
 		try {
-			Base.saveFile(featurefile, new File(Base.getSketchbookLibrariesPath()+"/ReefAngel_Features/ReefAngel_Features.h"));
+			BaseNoGui.saveFile(featurefile, new File(BaseNoGui.getSketchbookFolder().getPath()+"/libraries/ReefAngel_Features/ReefAngel_Features.h"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}    

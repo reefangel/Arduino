@@ -2369,9 +2369,9 @@ public class Editor extends JFrame implements RunnerListener {
   }
 
   synchronized public void RAhandleExport() {
-	    toolbar.activate(EditorToolbar.EXPORT);
+	    toolbar.activateExport();
 	    console.clear();
-	    status.progress(_("Uploading to Controller..."));
+	    status.progress(tr("Uploading to Controller..."));
 	  }
 
 

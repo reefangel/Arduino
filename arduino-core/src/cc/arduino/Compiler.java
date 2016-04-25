@@ -228,7 +228,7 @@ public class Compiler implements MessageConsumer {
     commandLine.addArgument("-warnings=" + PreferencesData.get("compiler.warning_level"), false);
 
     PreferencesData.getMap()
-      .subTree("build_properties_custom")
+      .subTree("runtime.build_properties_custom")
       .entrySet()
       .stream()
       .forEach(kv -> commandLine.addArgument("-prefs=\"" + kv.getKey() + "=" + kv.getValue() + "\"", false));
@@ -312,11 +312,11 @@ public class Compiler implements MessageConsumer {
     }
 
     if (textSize > maxTextSize) {
-      throw new RunnerException(tr("Sketch too big; see http://www.arduino.cc/en/Guide/Troubleshooting#size for tips on reducing it."));
+      throw new RunnerException(tr("Sketch too big; Please consider upgrading your head unit to a Reef Angel Plus."));
     }
 
     if (maxDataSize > 0 && dataSize > maxDataSize) {
-      throw new RunnerException(tr("Not enough memory; see http://www.arduino.cc/en/Guide/Troubleshooting#size for tips on reducing your footprint."));
+      throw new RunnerException(tr("Not enough memory; Please consider upgrading your head unit to a Reef Angel Plus."));
     }
 
     int warnDataPercentage = Integer.parseInt(prefs.get("build.warn_data_percentage"));

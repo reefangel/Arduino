@@ -727,7 +727,7 @@ public class Base {
     if (!newbieFile.createNewFile()) {
       throw new IOException();
     }
-    FileUtils.copyFile(new File(getContentFile("examples"), "01.Basics" + File.separator + "BareMinimum" + File.separator + "BareMinimum.ino"), newbieFile);
+    FileUtils.copyFile(new File(sketchbookDir, "Example Codes" + File.separator + "BareMinimum" + File.separator + "BareMinimum.ino"), newbieFile);
     return newbieFile;
   }
 

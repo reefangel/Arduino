@@ -76,7 +76,7 @@ public class EditorStatus extends JPanel {
   private final Font font;
 
   private int mode;
-  private String message;
+  public String message;
 
   private Image offscreen;
   private int sizeW;
