@@ -9,8 +9,8 @@
   </tstamp>
 
   <!-- Main url for boards and libraries repository -->
-  <property name="library_index_url" value="http://downloads.arduino.cc/libraries/library_index.json" />
-  <property name="package_index_url" value="http://downloads.arduino.cc/packages/package_index.json" />
+  <property name="library_index_url" value="http://www.reefangel.com/arduinoide/libraries/library_index.json" />
+  <property name="package_index_url" value="http://www.reefangel.com/arduinoide/packages/package_index.json" />
 
   <!-- Sets properties for macosx/windows/linux depending on current system -->
   <condition property="platform" value="macosx-old">
