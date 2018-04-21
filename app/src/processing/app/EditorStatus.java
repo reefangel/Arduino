@@ -24,6 +24,7 @@
 package processing.app;
 
 import processing.app.helpers.OSUtils;
+import cc.arduino.CompilerProgressListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,6 +32,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import static processing.app.I18n.tr;
 import static processing.app.Theme.scale;
@@ -89,12 +91,16 @@ public class EditorStatus extends JPanel {
   private JTextField editField;
   private JProgressBar progressBar;
   private JButton copyErrorButton;
+  
+  private ArrayList<CompilerProgressListener> compilerProgressListeners;
 
   public EditorStatus(Editor editor) {
     this.editor = editor;
     this.message = NO_MESSAGE;
     this.mode = NOTICE;
     this.font = Theme.getFont("status.font");
+    this.compilerProgressListeners = new ArrayList<>();
+    this.compilerProgressListeners.add(this::progressUpdate);
     initialize();
   }
 
@@ -148,7 +154,7 @@ public class EditorStatus extends JPanel {
     editField.setVisible(true);
     editField.setText(dflt);
     editField.selectAll();
-    editField.requestFocus();
+    editField.requestFocusInWindow();
 
     repaint();
   }
@@ -247,7 +253,7 @@ public class EditorStatus extends JPanel {
       // answering to rename/new code question
       if (mode == EDIT) {  // this if() isn't (shouldn't be?) necessary
         String answer = editField.getText();
-        editor.getSketch().nameCode(answer);
+        editor.getSketchController().nameCode(answer);
         unedit();
       }
     });
@@ -286,7 +292,7 @@ public class EditorStatus extends JPanel {
 
         if (c == KeyEvent.VK_ENTER) {  // accept the input
           String answer = editField.getText();
-          editor.getSketch().nameCode(answer);
+          editor.getSketchController().nameCode(answer);
           unedit();
           event.consume();
 
@@ -311,21 +317,12 @@ public class EditorStatus extends JPanel {
           editField.setCaretPosition(start + 1);
           event.consume();
 
-
         } else if ((c == '_') || (c == '.') || ((c >= 'A') && (c <= 'Z')) || ((c >= 'a') && (c <= 'z'))) { // allow .pde and .java
           // these are ok, allow them through
 
         } else if ((c >= '0') && (c <= '9')) {
-          // getCaretPosition == 0 means that it's the first char
-          // and the field is empty.
-          // getSelectionStart means that it *will be* the first
-          // char, because the selection is about to be replaced
-          // with whatever is typed.
-          if ((editField.getCaretPosition() == 0) ||
-            (editField.getSelectionStart() == 0)) {
-            // number not allowed as first digit
-            event.consume();
-          }
+          // these are ok, allow them through
+
         } else {
           event.consume();
         }
@@ -409,6 +406,14 @@ public class EditorStatus extends JPanel {
 
   public boolean isErr() {
     return mode == ERR;
+  }
+  
+  public void addCompilerProgressListener(CompilerProgressListener listener){
+    compilerProgressListeners.add(listener);
+  }
+  
+  public ArrayList<CompilerProgressListener> getCompilerProgressListeners(){
+    return compilerProgressListeners;
   }
 
 }
