@@ -40,7 +40,6 @@ import static processing.app.Theme.scale;
 /**
  * Panel just below the editing area that contains status messages.
  */
-
 public class EditorStatus extends JPanel {
 
   private static final int NOTICE = 0;
@@ -78,7 +77,7 @@ public class EditorStatus extends JPanel {
   private final Font font;
 
   private int mode;
-  public String message;
+  private String message;
 
   private Image offscreen;
   private int sizeW;

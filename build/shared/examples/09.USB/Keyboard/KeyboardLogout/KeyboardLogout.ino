@@ -35,13 +35,12 @@
 int platform = OSX;
 
 void setup() {
-  // make pin 2 an input and turn on the 
-  // pullup resistor so it goes high unless
+  // make pin 2 an input and turn on the pull-up resistor so it goes high unless
   // connected to ground:
   pinMode(2, INPUT_PULLUP);
   Keyboard.begin();
 }
- 
+
 void loop() {
   while (digitalRead(2) == HIGH) {
     // do nothing until pin 2 goes low
@@ -50,7 +49,6 @@ void loop() {
   delay(1000);
 
   switch (platform) {
-
     case OSX:
       Keyboard.press(KEY_LEFT_GUI);
       // Shift-Q logs out:
@@ -85,6 +83,7 @@ void loop() {
       Keyboard.write(KEY_RETURN);
       break;
   }
-// do nothing:
-  while(true);
+
+  // do nothing:
+  while (true);
 }

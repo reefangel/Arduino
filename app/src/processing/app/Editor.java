@@ -59,6 +59,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.FileReader;
+import java.io.BufferedReader;
 import java.net.ConnectException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -158,7 +160,7 @@ public class Editor extends JFrame implements RunnerListener {
 
   static volatile AbstractMonitor serialMonitor;
   static AbstractMonitor serialPlotter;
-  
+
   final EditorHeader header;
   EditorStatus status;
   EditorConsole console;
@@ -196,7 +198,6 @@ public class Editor extends JFrame implements RunnerListener {
   private Runnable presentAndSaveHandler;
   Runnable exportHandler;
   private Runnable exportAppHandler;
-  public Runnable RAexportHandler;
   private Runnable timeoutUploadHandler;
 
   public Editor(Base ibase, File file, int[] storedLocation, int[] defaultLocation, Platform platform) throws Exception {
@@ -249,7 +250,7 @@ public class Editor extends JFrame implements RunnerListener {
 
     //PdeKeywords keywords = new PdeKeywords();
     //sketchbook = new Sketchbook(this);
-    
+
     buildMenuBar();
 
     // For rev 0120, placing things inside a JPanel
@@ -342,9 +343,6 @@ public class Editor extends JFrame implements RunnerListener {
     if (!loaded) sketchController = null;
   }
 
-  public Base getBase() {
-	return base;
-  } 
 
   /**
    * Handles files dragged & dropped from the desktop and into the editor
@@ -403,8 +401,7 @@ public class Editor extends JFrame implements RunnerListener {
         statusNotice(tr("One file added to the sketch."));
 
       } else {
-        statusNotice(
-	    I18n.format(tr("{0} files added to the sketch."), successful));
+        statusNotice(I18n.format(tr("{0} files added to the sketch."), successful));
       }
       return true;
     }
@@ -736,16 +733,16 @@ public class Editor extends JFrame implements RunnerListener {
 
     addInternalTools(toolsMenu);
 
-    JMenuItem item = newJMenuItemShift(tr("Serial Monitor"), 'M');
+    JMenuItem item = newJMenuItemShift(tr("Manage Libraries..."), 'I');
+    item.addActionListener(e -> base.openLibraryManager("", ""));
+    toolsMenu.add(item);
+
+    item = newJMenuItemShift(tr("Serial Monitor"), 'M');
     item.addActionListener(e -> handleSerial());
     toolsMenu.add(item);
 
     item = newJMenuItemShift(tr("Serial Plotter"), 'L');
-    item.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          handlePlotter();
-        }
-    });
+    item.addActionListener(e -> handlePlotter());
     toolsMenu.add(item);
 
     addTools(toolsMenu, BaseNoGui.getToolsFolder());
@@ -773,6 +770,7 @@ public class Editor extends JFrame implements RunnerListener {
 
     base.rebuildProgrammerMenu();
     programmersMenu = new JMenu(tr("Programmer"));
+    MenuScroller.setScrollerFor(programmersMenu);
     base.getProgrammerMenus().stream().forEach(programmersMenu::add);
     toolsMenu.add(programmersMenu);
 
@@ -951,14 +949,14 @@ public class Editor extends JFrame implements RunnerListener {
     } finally {
       if (zipFile != null) {
         try {
-          zipFile.close();
-        } catch (IOException e) {
-          // noop
-        }
-      }
-    }
-    return null;
-	}
+           zipFile.close();
+         } catch (IOException e) {
+           // noop
+         }
+       }
+     }
+     return null;
+   }
 
   public void updateKeywords(PdeKeywords keywords) {
     for (EditorTab tab : tabs)
@@ -1480,6 +1478,7 @@ public class Editor extends JFrame implements RunnerListener {
   /**
    * Like newJMenuItem() but adds shift as a modifier for the key command.
    */
+  // Control + Shift + K seems to not be working on linux (Xubuntu 17.04, 2017-08-19)
   static public JMenuItem newJMenuItemShift(String title, int what) {
     JMenuItem menuItem = new JMenuItem(title);
     menuItem.setAccelerator(KeyStroke.getKeyStroke(what, SHORTCUT_KEY_MASK | ActionEvent.SHIFT_MASK));
@@ -1524,7 +1523,6 @@ public class Editor extends JFrame implements RunnerListener {
     presentAndSaveHandler = new BuildHandler(true, true);
     exportHandler = new DefaultExportHandler();
     exportAppHandler = new DefaultExportAppHandler();
-    RAexportHandler = new DefaultExportHandler();
     timeoutUploadHandler = new TimeoutUploadHandler();
   }
 
@@ -1724,7 +1722,6 @@ public class Editor extends JFrame implements RunnerListener {
     }
     toolbar.activateRun();
     status.progress(tr("Compiling sketch..."));
-
     // do this to advance/clear the terminal window / dos prompt / etc
     for (int i = 0; i < 10; i++) System.out.println();
 
@@ -1733,6 +1730,7 @@ public class Editor extends JFrame implements RunnerListener {
       console.clear();
     }
 
+    ProcessFeature();
     // Cannot use invokeLater() here, otherwise it gets
     // placed on the event thread and causes a hang--bad idea all around.
     new Thread(verbose ? verboseHandler : nonVerboseHandler).start();
@@ -2101,18 +2099,19 @@ public class Editor extends JFrame implements RunnerListener {
       names[i] = portMenu.getItem(i).getText();
     }
 
+    // FIXME: This is horribly unreadable
     String result = (String)
-      JOptionPane.showInputDialog(this,
-	I18n.format(
-	  tr("Serial port {0} not found.\n" +
-	    "Retry the upload with another serial port?"),
-	  PreferencesData.get("serial.port")
-	),
-				  "Serial port not found",
-                                  JOptionPane.PLAIN_MESSAGE,
-                                  null,
-                                  names,
-                                  0);
+    JOptionPane.showInputDialog(this,
+     I18n.format(
+      tr("Serial port {0} not found.\n" +
+       "Retry the upload with another serial port?"),
+      PreferencesData.get("serial.port")
+     ),
+     "Serial port not found",
+     JOptionPane.PLAIN_MESSAGE,
+     null,
+     names,
+     0);
     if (result == null) return false;
     selectSerialPort(result);
     base.onBoardOrPortChange();
@@ -2147,20 +2146,13 @@ public class Editor extends JFrame implements RunnerListener {
     }
     toolbar.activateExport();
     console.clear();
-    status.progress(tr("Uploading to Controller..."));
+    status.progress(tr("Uploading to Reef Angel Controller..."));
 
     avoidMultipleOperations = true;
 
     new Thread(timeoutUploadHandler).start();
     new Thread(usingProgrammer ? exportAppHandler : exportHandler).start();
   }
-
-  synchronized public void RAhandleExport() {
-	    toolbar.activateExport();
-	    console.clear();
-	    status.progress(tr("Uploading to Controller..."));
-	  }
-
 
   // DAM: in Arduino, this is upload
   class DefaultExportHandler implements Runnable {
@@ -2276,7 +2268,7 @@ public class Editor extends JFrame implements RunnerListener {
 
         boolean success = sketchController.exportApplet(true);
         if (success) {
-          statusNotice(tr("Done uploading."));
+          statusNotice(tr("Your controller was updated with your latest code."));
         }
       } catch (SerialNotFoundException e) {
         if (portMenu.getItemCount() == 0) statusError(e);
@@ -2333,7 +2325,7 @@ public class Editor extends JFrame implements RunnerListener {
         return;
       }
     }
-  
+
     if (serialMonitor != null) {
       // The serial monitor already exists
 
@@ -2363,14 +2355,14 @@ public class Editor extends JFrame implements RunnerListener {
     }
 
     serialMonitor = new MonitorFactory().newMonitor(port);
-    
+
     if (serialMonitor == null) {
       String board = port.getPrefs().get("board");
       String boardName = BaseNoGui.getPlatform().resolveDeviceByBoardID(BaseNoGui.packages, board);
       statusError(I18n.format(tr("Serial monitor is not supported on network ports such as {0} for the {1} in this release"), PreferencesData.get("serial.port"), boardName));
       return;
     }
-    
+
     Base.setIcon(serialMonitor);
 
     // If currently uploading, disable the monitor (it will be later
@@ -2430,7 +2422,7 @@ public class Editor extends JFrame implements RunnerListener {
     } while (serialMonitor.requiresAuthorization() && !success);
 
   }
-  
+
   public void handlePlotter() {
     if(serialMonitor != null) {
       if(serialMonitor.isClosed()) {
@@ -2440,7 +2432,7 @@ public class Editor extends JFrame implements RunnerListener {
         return;
       }
     }
-  
+
     if (serialPlotter != null) {
       // The serial plotter already exists
 
@@ -2750,4 +2742,146 @@ public class Editor extends JFrame implements RunnerListener {
     this.status.addCompilerProgressListener(listener);
   }
 
+  private void ProcessFeature()
+  {
+	    String d=this.getCurrentTab().getText();
+	    int numexp=0;
+	    int nummenu=0;
+	    int dimming=0;
+		String featurefile="// AutoGenerated file by Arduino (Reef Angel build) \n" + 
+		"\n" + 
+		"/*\n" + 
+		" * Copyright 2012 Reef Angel\n" + 
+		" *\n" + 
+		" * Licensed under the Apache License, Version 2.0 (the \"License\")\n" + 
+		" * you may not use this file except in compliance with the License.\n" + 
+		" * You may obtain a copy of the License at\n" + 
+		" *\n" + 
+		" * http://www.apache.org/licenses/LICENSE-2.0\n" + 
+		" *\n" + 
+		" * Unless required by applicable law or agreed to in writing, software\n" + 
+		" * distributed under the License is distributed on an \"AS IS\" BASIS,\n" + 
+		" * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n" + 
+		" * See the License for the specific language governing permissions and\n" + 
+		" * limitations under the License.\n" + 
+		" */\n" + 
+		"\n" + 
+		"\n" + 
+		"#ifndef __REEFANGEL_FEATURES_H__\n" + 
+		"#define __REEFANGEL_FEATURES_H__\n" + 
+		"\n" + 
+		"\n" +
+		"\n" + 
+		"#endif  // __REEFANGEL_FEATURES_H__";
+	    
+		System.out.println("The following features were automatically added:");
+		System.out.println("Watchdog Timer");
+		System.out.println("Version Menu\n");
+		featurefile=AddFeature(featurefile,"WDT");	
+		featurefile=AddFeature(featurefile,"VersionMenu");	
+		
+		System.out.println("The following features were detected:");	
+
+		String[] define=new String[0];
+		String[] keyword=new String[0];
+		String[] desc=new String[0];
+		try
+		{
+			System.out.println(BaseNoGui.getSketchbookFolder());
+			FileReader fileReader = new FileReader(BaseNoGui.getSketchbookFolder() + "/update/feature.txt"); 
+			BufferedReader bufferedReader = new BufferedReader(fileReader); 
+			List<String> linesdefine = new ArrayList<String>(); 
+			List<String> lineskeyword = new ArrayList<String>();
+			List<String> linesdesc = new ArrayList<String>();
+			String line = null; 
+			while ((line = bufferedReader.readLine()) != null) { 
+				String[] items = line.split(",");
+				if (items.length==3)
+				{
+					linesdefine.add(items[0]); 
+					lineskeyword.add(items[1]); 
+					linesdesc.add(items[2]); 
+				}
+			} 
+			bufferedReader.close(); 
+			define=linesdefine.toArray(new String[linesdefine.size()]); 
+			keyword=lineskeyword.toArray(new String[lineskeyword.size()]); 
+			desc=linesdesc.toArray(new String[linesdesc.size()]); 
+		}
+		catch (IOException e1) {
+			e1.printStackTrace();
+		} 	
+		for (int a=0;a<define.length;a++)
+		{
+		    if (d.indexOf(keyword[a])!=-1)
+		    {
+		    	if (featurefile.indexOf(define[a])==-1)
+		    	{
+			    	System.out.println(desc[a]);
+			    	featurefile=AddFeature(featurefile,define[a]);
+		    	}
+		    }
+		}
+		
+	    if (d.indexOf("Box1_")!=-1) numexp=1;
+	    if (d.indexOf("Box2_")!=-1) numexp=2;
+	    if (d.indexOf("Box3_")!=-1) numexp=3;
+	    if (d.indexOf("Box4_")!=-1) numexp=4;
+	    if (d.indexOf("Box5_")!=-1) numexp=5;
+	    if (d.indexOf("Box6_")!=-1) numexp=6;
+	    if (d.indexOf("Box7_")!=-1) numexp=7;
+	    if (d.indexOf("Box8_")!=-1) numexp=8;
+	    if (numexp!=0)
+	    {
+	    	System.out.println("Number of Relay Expansion Modules: " + numexp);
+	    	featurefile=AddFeature(featurefile,"InstalledRelayExpansionModules " + numexp);
+
+	    }
+
+	    if (d.indexOf("MenuEntry1")!=-1) nummenu=1;
+	    if (d.indexOf("MenuEntry2")!=-1) nummenu=2;
+	    if (d.indexOf("MenuEntry3")!=-1) nummenu=3;
+	    if (d.indexOf("MenuEntry4")!=-1) nummenu=4;
+	    if (d.indexOf("MenuEntry5")!=-1) nummenu=5;
+	    if (d.indexOf("MenuEntry6")!=-1) nummenu=6;
+	    if (d.indexOf("MenuEntry7")!=-1) nummenu=7;
+	    if (d.indexOf("MenuEntry8")!=-1) nummenu=8;
+	    if (d.indexOf("MenuEntry9")!=-1) nummenu=9;
+	    if (nummenu!=0) 
+	    {
+	    	System.out.println("Number of Menu Options: " + nummenu);
+	    	featurefile=AddFeature(featurefile,"CUSTOM_MENU_ENTRIES " + nummenu);
+	    }    
+	    else
+	    {
+	        if (d.indexOf("ReefAngel.AddStandardMenu")!=-1)
+	        {
+	        	System.out.println("Standard Menu");
+	        	featurefile=AddFeature(featurefile,"WavemakerSetup");        	
+	        	featurefile=AddFeature(featurefile,"ATOSetup");        	
+	        	featurefile=AddFeature(featurefile,"OverheatSetup");        	
+	        	featurefile=AddFeature(featurefile,"StandardLightSetup");        	
+	        }
+	        else
+	        {
+		        System.out.println("Simple Menu");
+		    	featurefile=AddFeature(featurefile,"SIMPLE_MENU");
+	        }
+	    }	    
+
+		try {
+			BaseNoGui.saveFile(featurefile, new File(BaseNoGui.getSketchbookFolder() + "/libraries/ReefAngel_Features/ReefAngel_Features.h"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}    
+  }
+  private String AddFeature(String featurefile, String feature)
+  {
+	  if (featurefile.indexOf(feature)==-1)
+	  {
+		  featurefile = featurefile.substring(0, featurefile.indexOf("#define __REEFANGEL_FEATURES_H__")+34) + "#define " + feature + "\n" + featurefile.substring(featurefile.indexOf("#define __REEFANGEL_FEATURES_H__")+34); 
+	  }
+	  return featurefile;
+  }
+  
 }

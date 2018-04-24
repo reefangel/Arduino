@@ -154,12 +154,12 @@ public class Compiler implements MessageConsumer {
   }
 
   public String build(CompilerProgressListener progListener, boolean exportHex) throws RunnerException, PreferencesMapException, IOException {
-    ArrayList<CompilerProgressListener> listeners = new ArrayList<>();
+    List<CompilerProgressListener> listeners = new ArrayList<>();
     listeners.add(progListener);
     return this.build(listeners, exportHex);
   }
 
-  public String build(ArrayList<CompilerProgressListener> progListeners, boolean exportHex) throws RunnerException, PreferencesMapException, IOException {
+  public String build(List<CompilerProgressListener> progListeners, boolean exportHex) throws RunnerException, PreferencesMapException, IOException {
     this.buildPath = sketch.getBuildPath().getAbsolutePath();
     this.buildCache = BaseNoGui.getCachePath();
 
@@ -328,56 +328,6 @@ public class Compiler implements MessageConsumer {
       RunnerException re = new RunnerException(I18n.format(tr("Error compiling for board {0}."), board.getName()));
       re.hideStackTrace();
       throw re;
-    }
-  }
-
-  private void size(PreferencesMap prefs) throws RunnerException {
-    String maxTextSizeString = prefs.get("upload.maximum_size");
-    String maxDataSizeString = prefs.get("upload.maximum_data_size");
-
-    if (maxTextSizeString == null) {
-      return;
-    }
-
-    long maxTextSize = Integer.parseInt(maxTextSizeString);
-    long maxDataSize = -1;
-
-    if (maxDataSizeString != null) {
-      maxDataSize = Integer.parseInt(maxDataSizeString);
-    }
-
-    Sizer sizer = new Sizer(prefs);
-    long[] sizes;
-    try {
-      sizes = sizer.computeSize();
-    } catch (RunnerException e) {
-      System.err.println(I18n.format(tr("Couldn't determine program size: {0}"), e.getMessage()));
-      return;
-    }
-
-    long textSize = sizes[0];
-    long dataSize = sizes[1];
-    System.out.println();
-    System.out.println(I18n.format(tr("Sketch uses {0} bytes ({2}%%) of program storage space. Maximum is {1} bytes."), textSize, maxTextSize, textSize * 100 / maxTextSize));
-    if (dataSize >= 0) {
-      if (maxDataSize > 0) {
-        System.out.println(I18n.format(tr("Global variables use {0} bytes ({2}%%) of dynamic memory, leaving {3} bytes for local variables. Maximum is {1} bytes."), dataSize, maxDataSize, dataSize * 100 / maxDataSize, maxDataSize - dataSize));
-      } else {
-        System.out.println(I18n.format(tr("Global variables use {0} bytes of dynamic memory."), dataSize));
-      }
-    }
-
-    if (textSize > maxTextSize) {
-      throw new RunnerException(tr("Sketch too big; Please consider upgrading your head unit to a Reef Angel Plus."));
-    }
-
-    if (maxDataSize > 0 && dataSize > maxDataSize) {
-      throw new RunnerException(tr("Not enough memory; Please consider upgrading your head unit to a Reef Angel Plus."));
-    }
-
-    int warnDataPercentage = Integer.parseInt(prefs.get("build.warn_data_percentage"));
-    if (maxDataSize > 0 && dataSize > maxDataSize * warnDataPercentage / 100) {
-      System.err.println(tr("Low memory available, stability problems may occur."));
     }
   }
 
@@ -565,7 +515,17 @@ public class Compiler implements MessageConsumer {
     String[] pieces = PApplet.match(s, ERROR_FORMAT);
 
     if (pieces != null) {
-      String error = pieces[pieces.length - 1], msg = "";
+      String msg = "";
+      int errorIdx = pieces.length - 1;
+      String error = pieces[errorIdx];
+      String filename = pieces[1];
+      int line = PApplet.parseInt(pieces[2]);
+      int col;
+      if (errorIdx > 3) {
+        col = PApplet.parseInt(pieces[3].substring(1));
+      } else {
+        col = -1;
+      }
 
       if (error.trim().equals("SPI.h: No such file or directory")) {
         error = tr("Please import the SPI library from the Sketch > Import Library menu.");
@@ -619,12 +579,17 @@ public class Compiler implements MessageConsumer {
         //msg = _("\nThe 'Keyboard' class is only supported on the Arduino Leonardo.\n\n");
       }
 
-      RunnerException ex = placeException(error, pieces[1], PApplet.parseInt(pieces[2]) - 1);
+      RunnerException ex = placeException(error, filename, line - 1, col);
 
       if (ex != null) {
         String fileName = ex.getCodeFile().getPrettyName();
         int lineNum = ex.getCodeLine() + 1;
-        s = fileName + ":" + lineNum + ": error: " + error + msg;
+        int colNum = ex.getCodeColumn();
+        if (colNum != -1) {
+          s = fileName + ":" + lineNum + ":" + colNum + ": error: " + error + msg;
+        } else {
+          s = fileName + ":" + lineNum + ": error: " + error + msg;
+        }
       }
 
       if (ex != null) {
@@ -650,10 +615,10 @@ public class Compiler implements MessageConsumer {
     System.err.println(s);
   }
 
-  private RunnerException placeException(String message, String fileName, int line) {
+  private RunnerException placeException(String message, String fileName, int line, int col) {
     for (SketchFile file : sketch.getFiles()) {
       if (new File(fileName).getName().equals(file.getFileName())) {
-        return new RunnerException(message, file, line);
+        return new RunnerException(message, file, line, col);
       }
     }
     return null;

@@ -1,9 +1,23 @@
+ARDUINO 1.8.6
+
+[ide]
+* Added translations for library types. Thanks @ReAlUA
+* Added scroller in programmers menu.
+* Added "accelerator" in scrollable menu, press "a" key while scrolling
+* Keep "Board Manager" menu item always as first in the menu
+
+[core]
+* AVR: Set Optiboot as default bootloader for Nano. This is the bootloader installed on new Arduino Nano boards. If you have a Nano with the old bootloader you must select Tools > Processor > ATmega328P (Old Bootloader) to upload.
+
+[wifi101-firmware]
+* SECURITY FIX: Released fix for WPA2 KRACK vulnerability (latest WINC1500 firmware 19.5.2).
+
 ARDUINO 1.8.5 2017.09.29
 
 (bugfix service release)
 
 [ide]
-* Added workaround for menu visualization bug in MacOSX 10.13 beta. Thanks @puybaret
+* Added workaround for menu visibility bug in MacOSX 10.13 beta. Thanks @puybaret
 * Fixed bug for negative-font-size.
 * New/Rename tabs now allows names starting with a number.
 
